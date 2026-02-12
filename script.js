@@ -83,59 +83,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ===== PROJECT FILTERING =====
     const filterButtons = document.querySelectorAll(".project-filter-btn");
-    const projectCards = document.querySelectorAll(".project-card");
+    const workSection = document.getElementById("work");
+    const projectCards = workSection ? workSection.querySelectorAll(".project-card[data-category]") : [];
+
+    const categoryMap = {
+        'all': ['analytics', 'fintech', 'system', 'automation', 'forecasting', 'risk', 'web'],
+        'analytics': ['analytics', 'fintech', 'automation'],
+        'system': ['system', 'automation'],
+        'forecasting': ['forecasting', 'risk'],
+        'web': ['web']
+    };
 
     filterButtons.forEach(btn => {
         btn.addEventListener("click", () => {
             const filter = btn.getAttribute("data-filter");
             
-            // Update active button
-            filterButtons.forEach(b => {
-                b.classList.remove("active", "bg-black", "text-white", "dark:bg-white", "dark:text-black", "border-black", "dark:border-gray-600");
-                b.classList.add("bg-white", "dark:bg-gray-800", "border-gray-300", "dark:border-gray-700");
-            });
+            filterButtons.forEach(b => b.classList.remove("active"));
             btn.classList.add("active");
-            btn.classList.remove("bg-white", "dark:bg-gray-800", "border-gray-300", "dark:border-gray-700");
-            if (document.documentElement.classList.contains("dark")) {
-                btn.classList.add("dark:bg-white", "dark:text-black", "dark:border-gray-600");
-            } else {
-                btn.classList.add("bg-black", "text-white", "border-black");
-            }
-            
-            // Filter projects
-            const categoryMap = {
-                'all': 'all',
-                'analytics': ['analytics', 'fintech'],
-                'system': ['system', 'automation'],
-                'forecasting': ['forecasting', 'risk'],
-                'web': ['web']
-            };
             
             projectCards.forEach((card, index) => {
-                const categories = card.getAttribute('data-category').split(' ');
-                let shouldShow = false;
-                
-                if (filter === 'all') {
-                    shouldShow = true;
-                } else if (categoryMap[filter]) {
-                    const targetCategories = Array.isArray(categoryMap[filter]) ? categoryMap[filter] : [categoryMap[filter]];
-                    shouldShow = targetCategories.some(cat => categories.includes(cat));
-                } else {
-                    shouldShow = categories.includes(filter);
-                }
+                const categories = (card.getAttribute('data-category') || '').split(/\s+/).filter(Boolean);
+                const targets = categoryMap[filter] || [];
+                const shouldShow = filter === 'all' || targets.some(cat => categories.includes(cat));
                 
                 if (shouldShow) {
                     card.style.display = 'block';
-                    setTimeout(() => {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0) scale(1)';
-                    }, index * 50);
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0) scale(1)';
                 } else {
                     card.style.opacity = '0';
                     card.style.transform = 'translateY(20px) scale(0.95)';
-                    setTimeout(() => {
-                        card.style.display = 'none';
-                    }, 300);
+                    setTimeout(() => { card.style.display = 'none'; }, 300);
                 }
             });
         });
@@ -145,7 +123,18 @@ document.addEventListener("DOMContentLoaded", () => {
     const projectModalBtns = document.querySelectorAll('.project-modal-btn');
     const modalOverlay = document.getElementById('modal-overlay');
     const modalBody = document.getElementById('modal-body');
-    const modalClose = document.querySelector('.modal-close');
+    const modalContent = modalOverlay ? modalOverlay.querySelector('.modal-content') : null;
+    
+    // Function to close project modal
+    function closeProjectModal() {
+        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+            if (history.state?.modal === 'project') {
+                history.back();
+            }
+        }
+    }
 
     const projectData = {
         "iroutine": {
@@ -288,102 +277,131 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (project && modalBody && modalOverlay) {
                 modalBody.innerHTML = `
-                    <div class="mb-8 pb-6 border-b-2" style="border-color: #22C55E; opacity: 0.3;">
+                    <div class="mb-8 pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.3);">
                         <div class="mb-6">
-                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(34, 197, 94, 0.1); color: #22C55E;">${project.category}</span>
-                            <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-6 text-black dark:text-white">${project.title}</h2>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">${project.category}</span>
+                            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: #F8FAFC;">${project.title}</h2>
                         </div>
                         
-                        <div class="space-y-8">
-                            <div class="p-6 rounded-xl border-l-4" style="border-color: #22C55E; background: rgba(34, 197, 94, 0.03);">
-                                <h3 class="text-xl font-bold mb-3 text-black dark:text-white flex items-center gap-2">
-                                    <span style="color: #22C55E;">●</span>
+                        <div class="space-y-6">
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
+                                    <span style="color: #6EE7B7;">●</span>
                                     Problem
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${project.problem}</p>
+                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.problem}</p>
                             </div>
                             
-                            <div class="p-6 rounded-xl border-l-4" style="border-color: #22C55E; background: rgba(34, 197, 94, 0.03);">
-                                <h3 class="text-xl font-bold mb-3 text-black dark:text-white flex items-center gap-2">
-                                    <span style="color: #22C55E;">●</span>
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
+                                    <span style="color: #6EE7B7;">●</span>
                                     Context
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${project.context}</p>
+                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.context}</p>
                             </div>
                             
-                            <div class="p-6 rounded-xl border-l-4" style="border-color: #22C55E; background: rgba(34, 197, 94, 0.03);">
-                                <h3 class="text-xl font-bold mb-3 text-black dark:text-white flex items-center gap-2">
-                                    <span style="color: #22C55E;">●</span>
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
+                                    <span style="color: #6EE7B7;">●</span>
                                     Approach
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${project.approach}</p>
+                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.approach}</p>
                             </div>
                             
                             <div>
-                                <h3 class="text-xl font-bold mb-4 text-black dark:text-white">Technologies</h3>
-                                <div class="flex flex-wrap gap-3">
+                                <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Technologies</h3>
+                                <div class="flex flex-wrap gap-2">
                                     ${project.technologies.map(tech => 
-                                        `<span class="px-4 py-2 rounded-lg text-sm font-medium border-2 transition-all hover:scale-105" style="background: rgba(34, 197, 94, 0.1); border-color: rgba(34, 197, 94, 0.3); color: #22C55E;">${tech}</span>`
+                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: rgba(110, 231, 183, 0.1); border-color: rgba(110, 231, 183, 0.3); color: #6EE7B7;">${tech}</span>`
                                     ).join('')}
                                 </div>
                             </div>
                             
                             <div>
-                                <h3 class="text-xl font-bold mb-4 text-black dark:text-white">Results</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Results</h3>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                     ${Object.entries(project.results).map(([key, value]) => `
-                                        <div class="p-5 rounded-xl border-2 transition-all hover:scale-105" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
-                                            <div class="text-sm font-medium text-gray-600 dark:text-gray-400 mb-2">${key}</div>
-                                            <div class="text-2xl font-bold" style="color: #22C55E;">${value}</div>
+                                        <div class="p-4 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                                            <div class="text-xs font-medium mb-1" style="color: #94A3B8;">${key}</div>
+                                            <div class="text-lg font-bold" style="color: #6EE7B7;">${value}</div>
                                         </div>
                                     `).join('')}
                                 </div>
                             </div>
                             
-                            <div class="p-6 rounded-xl border-2" style="border-color: rgba(34, 197, 94, 0.3); background: rgba(34, 197, 94, 0.03);">
-                                <h3 class="text-xl font-bold mb-3 text-black dark:text-white flex items-center gap-2">
-                                    <span style="color: #22C55E;">●</span>
+                            <div class="p-4 rounded-lg border" style="border-color: rgba(110, 231, 183, 0.2); background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
+                                    <span style="color: #6EE7B7;">●</span>
                                     Lessons & Next Steps
                                 </h3>
-                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">${project.lessons}</p>
+                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.lessons}</p>
                             </div>
                             
-                            <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t-2" style="border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: rgba(110, 231, 183, 0.2);">
                                 ${project.links.github ? `
-                                    <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="btn-primary flex-1 justify-center">
+                                    <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary inline-flex items-center justify-center gap-2">
                                         <img src="images/github.png" alt="GitHub" class="w-5 h-5">
                                         View on GitHub
                                     </a>
                                 ` : ''}
                                 ${project.links.demo && project.links.demo !== '#' ? `
-                                    <a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="btn-secondary flex-1 justify-center">
+                                    <a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-secondary inline-flex items-center justify-center gap-2">
                                         Live Demo
                                     </a>
                                 ` : ''}
                             </div>
+                        </div>
                     </div>
                 `;
                 
                 modalOverlay.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
+                history.pushState({ modal: 'project' }, '', window.location.href);
             }
         });
     });
 
-    // Close modal
-    if (modalClose && modalOverlay) {
-        modalClose.addEventListener('click', () => {
-            modalOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-        });
-        
+    // Close modal - overlay click and escape key
+    if (modalOverlay) {
+        // Use event delegation for close button (works even if button is recreated)
         modalOverlay.addEventListener('click', (e) => {
+            // Close button click
+            if (e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeProjectModal();
+                return;
+            }
+            
+            // Overlay click (outside modal-content) to close
             if (e.target === modalOverlay) {
-                modalOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
+                closeProjectModal();
             }
         });
+        
+        // Prevent clicks inside modal-content from closing (but allow close button)
+        if (modalContent) {
+            modalContent.addEventListener('click', (e) => {
+                // Don't stop propagation for close button
+                if (!e.target.classList.contains('modal-close') && !e.target.closest('.modal-close')) {
+                    e.stopPropagation();
+                }
+            });
+        }
     }
+
+    // Browser back button closes modal
+    window.addEventListener('popstate', () => {
+        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
+            modalOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        const articleModalOverlayRef = document.getElementById('article-modal-overlay');
+        if (articleModalOverlayRef && !articleModalOverlayRef.classList.contains('hidden')) {
+            articleModalOverlayRef.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    });
 
     // ===== NAVBAR SCROLL EFFECT =====
     const nav = document.getElementById('main-nav') || document.querySelector('nav');
@@ -448,8 +466,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'January 2025',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(34, 197, 94, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(34, 197, 94, 0.1); color: #22C55E;">Technical Guide</span>
+                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Technical Guide</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
                     </div>
                     
@@ -487,7 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             If I were rebuilding this today, I'd add more granular filtering options, implement caching for frequently accessed queries, and add export functionality for deeper analysis in Excel or Python.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This is based on my experience building risk dashboards for financial analysis projects. If you're working on something similar, feel free to reach out—I'm always happy to discuss approaches and trade-offs.
                             </p>
@@ -502,8 +520,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'December 2024',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(34, 197, 94, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(34, 197, 94, 0.1); color: #22C55E;">Data Science</span>
+                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Data Science</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published December 2024</p>
                     </div>
                     
@@ -542,7 +560,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             I usually start with both models and compare their performance. ARIMA often gives better short-term forecasts (1-7 days), while regression can be more accurate for longer horizons when external factors matter more. The key is testing both and understanding the business context.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This comparison is based on my work with the Weather Analyzer project and financial forecasting models. The "right" choice depends on your data and use case—there's no one-size-fits-all answer.
                             </p>
@@ -557,8 +575,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'November 2024',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(34, 197, 94, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(34, 197, 94, 0.1); color: #22C55E;">Financial Analysis</span>
+                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Financial Analysis</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published November 2024</p>
                     </div>
                     
@@ -586,16 +604,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <h3 class="text-2xl font-bold mb-4 text-black dark:text-white">Key Libraries</h3>
                         <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="p-3 rounded-lg border" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                                 <strong class="text-black dark:text-white">requests</strong> - API calls to SEC EDGAR
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                                 <strong class="text-black dark:text-white">BeautifulSoup</strong> - HTML parsing
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                                 <strong class="text-black dark:text-white">pandas</strong> - Data manipulation
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                                 <strong class="text-black dark:text-white">re</strong> - Pattern matching
                             </div>
                         </div>
@@ -616,7 +634,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             I'm working on adding machine learning to improve extraction accuracy, especially for companies with non-standard formatting. I'm also exploring ways to extract qualitative insights (like risk factors) using NLP.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(34, 197, 94, 0.05); border-color: rgba(34, 197, 94, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This approach has been useful for my financial analysis projects. If you're working on something similar, I'd be happy to share code snippets or discuss challenges you're facing.
                             </p>
@@ -635,41 +653,60 @@ document.addEventListener("DOMContentLoaded", () => {
             if (article && articleModalBody && articleModalOverlay) {
                 articleModalBody.innerHTML = `
                     <div class="mb-6">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-black dark:text-white">${article.title}</h2>
+                        <h2 class="text-2xl md:text-3xl font-bold mb-4 article-modal-title">${article.title}</h2>
                     </div>
                     ${article.content}
                 `;
                 
                 articleModalOverlay.classList.remove('hidden');
                 document.body.style.overflow = 'hidden';
+                history.pushState({ modal: 'article' }, '', window.location.href);
             }
         });
     });
 
-    // Close article modal
-    if (articleModalClose && articleModalOverlay) {
-        articleModalClose.addEventListener('click', () => {
+    // Close article modal - event delegation (close button + overlay click)
+    function closeArticleModal() {
+        if (articleModalOverlay && !articleModalOverlay.classList.contains('hidden')) {
             articleModalOverlay.classList.add('hidden');
             document.body.style.overflow = '';
-        });
-        
+            if (history.state?.modal === 'article') {
+                history.back();
+            }
+        }
+    }
+
+    if (articleModalOverlay) {
+        const articleModalContent = articleModalOverlay.querySelector('.modal-content');
         articleModalOverlay.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
+                e.preventDefault();
+                e.stopPropagation();
+                closeArticleModal();
+                return;
+            }
             if (e.target === articleModalOverlay) {
-                articleModalOverlay.classList.add('hidden');
-                document.body.style.overflow = '';
+                closeArticleModal();
             }
         });
+        if (articleModalContent) {
+            articleModalContent.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('modal-close') && !e.target.closest('.modal-close')) {
+                    e.stopPropagation();
+                }
+            });
+        }
     }
-    
-    // ===== NAVBAR SCROLL EFFECT =====
-    const nav = document.querySelector('nav');
-    if (nav) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-xl');
-            } else {
-                nav.classList.remove('shadow-xl');
-            }
-        });
-    }
+
+    // Single Escape key handler for all modals
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
+            closeProjectModal();
+            return;
+        }
+        if (articleModalOverlay && !articleModalOverlay.classList.contains('hidden')) {
+            closeArticleModal();
+        }
+    });
 });
