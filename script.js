@@ -12,10 +12,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 screen.style.opacity = "0";
                 screen.style.visibility = "hidden";
                 screen.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
-                setTimeout(() => {
+        setTimeout(() => {
                     screen.classList.add("hidden");
                     screen.style.display = "none";
-                }, 500);
+            }, 500);
             }
         });
     }
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 mobileMenu.classList.add("hidden");
             });
         });
-        
+
         // Close menu when clicking outside
         document.addEventListener("click", (e) => {
             if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         anchor.addEventListener("click", function(e) {
             const href = this.getAttribute("href");
             if (href === "#" || href === "#home") {
-                e.preventDefault();
+            e.preventDefault();
                 window.scrollTo({ top: 0, behavior: "smooth" });
                 return;
             }
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 if (shouldShow) {
                     card.style.display = 'block';
-                    card.style.opacity = '1';
+                        card.style.opacity = '1';
                     card.style.transform = 'translateY(0) scale(1)';
                 } else {
                     card.style.opacity = '0';
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (project && modalBody && modalOverlay) {
                 modalBody.innerHTML = `
                     <div class="mb-8 pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.3);">
-                        <div class="mb-6">
+                    <div class="mb-6">
                             <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">${project.category}</span>
                             <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: #F8FAFC;">${project.title}</h2>
                         </div>
@@ -298,57 +298,57 @@ document.addEventListener("DOMContentLoaded", () => {
                                     Context
                                 </h3>
                                 <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.context}</p>
-                            </div>
-                            
+                        </div>
+                        
                             <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
                                     <span style="color: #6EE7B7;">●</span>
                                     Approach
                                 </h3>
                                 <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.approach}</p>
-                            </div>
-                            
-                            <div>
+                        </div>
+                        
+                        <div>
                                 <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Technologies</h3>
-                                <div class="flex flex-wrap gap-2">
-                                    ${project.technologies.map(tech => 
+                        <div class="flex flex-wrap gap-2">
+                            ${project.technologies.map(tech => 
                                         `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: rgba(110, 231, 183, 0.1); border-color: rgba(110, 231, 183, 0.3); color: #6EE7B7;">${tech}</span>`
-                                    ).join('')}
-                                </div>
-                            </div>
-                            
-                            <div>
+                            ).join('')}
+                        </div>
+                    </div>
+                    
+                        <div>
                                 <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Results</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    ${Object.entries(project.results).map(([key, value]) => `
+                                ${Object.entries(project.results).map(([key, value]) => `
                                         <div class="p-4 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
                                             <div class="text-xs font-medium mb-1" style="color: #94A3B8;">${key}</div>
                                             <div class="text-lg font-bold" style="color: #6EE7B7;">${value}</div>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                                    </div>
+                                `).join('')}
                             </div>
-                            
+                    </div>
+                    
                             <div class="p-4 rounded-lg border" style="border-color: rgba(110, 231, 183, 0.2); background: rgba(110, 231, 183, 0.05);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
                                     <span style="color: #6EE7B7;">●</span>
                                     Lessons & Next Steps
                                 </h3>
                                 <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.lessons}</p>
-                            </div>
-                            
+                                </div>
+                        
                             <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: rgba(110, 231, 183, 0.2);">
-                                ${project.links.github ? `
+                            ${project.links.github ? `
                                     <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary inline-flex items-center justify-center gap-2">
-                                        <img src="images/github.png" alt="GitHub" class="w-5 h-5">
-                                        View on GitHub
-                                    </a>
-                                ` : ''}
-                                ${project.links.demo && project.links.demo !== '#' ? `
+                                    <img src="images/github.png" alt="GitHub" class="w-5 h-5">
+                                    View on GitHub
+                                </a>
+                            ` : ''}
+                            ${project.links.demo && project.links.demo !== '#' ? `
                                     <a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-secondary inline-flex items-center justify-center gap-2">
-                                        Live Demo
-                                    </a>
-                                ` : ''}
+                                    Live Demo
+                                </a>
+                            ` : ''}
                             </div>
                         </div>
                     </div>
@@ -367,7 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
         modalOverlay.addEventListener('click', (e) => {
             // Close button click
             if (e.target.classList.contains('modal-close') || e.target.closest('.modal-close')) {
-                e.preventDefault();
+            e.preventDefault();
                 e.stopPropagation();
                 closeProjectModal();
                 return;
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
         threshold: 0.1,
         rootMargin: '0px 0px -100px 0px'
     };
-    
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
@@ -442,14 +442,14 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }, observerOptions);
-    
+
     // Observe animated elements
     document.querySelectorAll('.project-card, section > div > div').forEach((el, index) => {
         if (!el.classList.contains('text-center') && !el.classList.contains('article-card')) {
-            el.style.opacity = '0';
+        el.style.opacity = '0';
             el.style.transform = 'translateY(30px) scale(0.95)';
             el.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)`;
-            observer.observe(el);
+        observer.observe(el);
         }
     });
 
@@ -709,4 +709,4 @@ document.addEventListener("DOMContentLoaded", () => {
             closeArticleModal();
         }
     });
-});
+}); 
