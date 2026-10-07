@@ -1,4 +1,5 @@
-// Enhanced JavaScript for Portfolio with Modals and Filters
+// Enhanced JavaScript for Portfolio with Modals and Filters  
+//
 
 document.addEventListener("DOMContentLoaded", () => {
     // ===== LOADING SCREEN =====
