@@ -17,7 +17,7 @@ Open http://127.0.0.1:8917. Use another port if it is occupied. The committed st
 - `index.html`: introduction, project cards, skills, experience, biography, and contact links.
 - `script.js`: case studies, writing content, filters, navigation, modal behavior, and theme controls.
 - `styles.css`: preserved original styling.
-- `enhancements.css`: light mode, accessibility, and responsive refinements.
+- `enhancements.css`: light mode, accessibility, and responsive refinements. Bump its `?v=` value in `index.html` when changing it so browsers load the new styles.
 - `theme.js`: applies the saved theme before the first paint.
 - `images/projects/`: optimized screenshots of the actual public projects.
 - **Résumé:** replace `images/Sabin_Raut_Resume.pdf` with your updated PDF, keeping that filename. The enhancement does not edit any résumé PDF.
