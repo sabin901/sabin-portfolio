@@ -1,30 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
+    <script src="theme.js"></script>
+    <meta name="theme-color" content="#0A1A2F">
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
     <!-- SEO Meta Tags -->
     <title>Sabin Raut | Software Engineering & Full Stack Developer | Information Systems & Finance</title>
-    <link rel="canonical" href="https://sabin-raut.vercel.app">
-    <link rel="sitemap" type="application/xml" href="/sitemap.xml">
+    <link rel="canonical" href="https://sabin901.github.io/sabin-portfolio/">
+    <link rel="sitemap" type="application/xml" href="sitemap.xml">
     <meta name="description" content="Sabin Raut is a software engineering student at St Cloud State University (IS & Finance) who builds full stack applications, data driven systems, and scalable web platforms. Java, Python, React, TypeScript, SQL.">
     <meta name="keywords" content="Sabin Raut, Software Engineering, Full Stack Developer, Information Systems Student, Finance Student, Java, Python, React, TypeScript, Web Development, St Cloud State University">
     <meta name="author" content="Sabin Raut">
     <meta name="robots" content="index, follow">
-    
+
     <!-- Open Graph Tags -->
     <meta property="og:title" content="Sabin Raut | Information Systems & Finance Student | Full Stack & Data Systems Builder">
     <meta property="og:description" content="Information Systems and Finance student at St Cloud State University. Full stack applications, data driven systems, and scalable web platforms.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sabin-raut.vercel.app">
-    <meta property="og:image" content="https://sabin-raut.vercel.app/images/profile-pic.png">
+    <meta property="og:url" content="https://sabin901.github.io/sabin-portfolio/">
+    <meta property="og:image" content="https://sabin901.github.io/sabin-portfolio/images/profile-pic.png">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Sabin Raut | Information Systems & Finance Student">
     <meta name="twitter:description" content="Full stack & data systems builder. St Cloud State University.">
-    <meta name="twitter:image" content="https://sabin-raut.vercel.app/images/profile-pic.png">
+    <meta name="twitter:image" content="https://sabin901.github.io/sabin-portfolio/images/profile-pic.png">
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -33,9 +36,9 @@
       "@type": "Person",
       "name": "Sabin Raut",
       "jobTitle": "Software Engineering Student | Information Systems & Finance",
-      "url": "https://sabin-raut.vercel.app",
+      "url": "https://sabin901.github.io/sabin-portfolio/",
       "sameAs": [
-        "https://www.linkedin.com/in/sabin-raut",
+        "https://www.linkedin.com/in/sabin-raut-",
         "https://github.com/sabin901"
       ],
       "alumniOf": {
@@ -44,38 +47,30 @@
       }
     }
     </script>
-    
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
-        }
-    </script>
-    
+
+    <!-- Precompiled utilities preserve the existing Tailwind layout. -->
+    <link rel="stylesheet" href="utilities.css">
+
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="enhancements.css">
+    <noscript><style>#loading-screen {display:none!important}</style></noscript>
 </head>
 <body class="text-black font-sans antialiased">
+    <a href="#main-content" class="skip-link">Skip to content</a>
 
     <!-- Scroll Progress Indicator -->
     <div id="scroll-progress" style="width: 0%;"></div>
-    
+
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen">
         <div class="text-center">
-            <div class="inline-block w-12 h-12 border-4 border-gray-600 rounded-full animate-spin mb-4" style="border-top-color: #6EE7B7;"></div>
+            <div class="inline-block w-12 h-12 border-4 border-gray-600 rounded-full animate-spin mb-4" style="border-top-color: var(--accent-mint);"></div>
             <p class="text-xl font-semibold text-white">Sabin Raut</p>
         </div>
     </div>
@@ -84,7 +79,7 @@
     <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 nav-dark">
         <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
             <a href="#home" class="text-xl font-bold nav-logo">Sabin Raut</a>
-            <div class="hidden md:flex items-center gap-8">
+            <div class="hidden lg:flex items-center gap-4">
                 <a href="#about" class="nav-link">About</a>
                 <a href="#skills" class="nav-link">Skills</a>
                 <a href="#experience" class="nav-link">Experience</a>
@@ -93,13 +88,19 @@
                 <a href="#contact" class="nav-link">Contact</a>
                 <a href="images/Sabin_Raut_Resume.pdf" download="Sabin_Raut_Resume.pdf" class="nav-resume-btn">Resume</a>
             </div>
-            <button class="md:hidden p-2 rounded-lg hover:bg-gray-800/50 transition-colors" id="mobile-menu-toggle" aria-label="Menu">
+            <div class="flex items-center gap-2">
+            <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch to light mode" aria-pressed="false" hidden>
+                <svg class="theme-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+                <svg class="theme-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.4 14.1A8.5 8.5 0 0 1 9.9 3.6a8.5 8.5 0 1 0 10.5 10.5Z"/></svg>
+            </button>
+            <button class="lg:hidden p-2 rounded-lg hover:bg-gray-800/50 transition-colors" id="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
                 <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                 </svg>
             </button>
+            </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden border-t border-nav-border">
+        <div id="mobile-menu" class="hidden lg:hidden border-t border-nav-border">
             <div class="px-6 py-4 flex flex-col gap-2 bg-nav-bg">
                 <a href="#about" class="nav-link-mobile">About</a>
                 <a href="#skills" class="nav-link-mobile">Skills</a>
@@ -114,18 +115,19 @@
 
     <!-- Social Icons - Left side fixed (Brittany Chiang style) -->
     <div class="fixed left-8 top-1/2 -translate-y-1/2 hidden lg:flex flex-col gap-6 z-40 social-sidebar">
-        <a href="https://github.com/sabin901" target="_blank" rel="noopener noreferrer" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover">
+        <a href="https://github.com/sabin901" target="_blank" rel="noopener noreferrer" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover" aria-label="GitHub profile">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003.404 1.02-.405 2.046-.67 3.003-.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
         </a>
-        <a href="https://linkedin.com/in/sabin-raut" target="_blank" rel="noopener noreferrer" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover">
+        <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" rel="noopener noreferrer" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover" aria-label="LinkedIn profile">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.71C.765 0 0 .765 0 1.71v20.58C0 23.235.765 24 1.71 24h20.515c.945 0 1.71-.765 1.71-1.71V1.71C24 .765 23.235 0 22.225 0z"/></svg>
         </a>
-        <a href="mailto:sabinraut343@gmail.com" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover">
+        <a href="mailto:sabinraut343@gmail.com" class="social-icon-btn w-8 h-8 flex items-center justify-center transition-all text-accent hover:text-accent-hover" aria-label="Email Sabin">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
         </a>
         <div class="w-px h-24 bg-accent/50 ml-3"></div>
                     </div>
 
+    <main id="main-content" tabindex="-1">
     <!-- Hero Section -->
     <section id="home" class="relative flex items-center min-h-screen pt-20 home-background">
         <div class="max-w-4xl mx-auto px-6 py-20 w-full">
@@ -134,7 +136,7 @@
                 <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-slate-200 mb-2 animate-fade-in" style="animation-delay: 0.2s;">Sabin Raut.</h1>
                 <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-300 mb-6 animate-fade-in" style="animation-delay: 0.25s;">I build full stack software and data driven systems.</h2>
                 <p class="text-slate-400 text-lg max-w-2xl leading-relaxed mb-10 animate-fade-in" style="animation-delay: 0.3s;">
-                    I am a software engineering–focused student (Information Systems & Finance) at St Cloud State University with hands on experience building full stack applications and backend systems. My work focuses on system reliability, data correctness, and practical business impact through clean code and scalable architecture.
+                    I’m an Information Systems and Finance student at St. Cloud State University. I build full-stack applications, data tools, and desktop experiences with Python, TypeScript, React, and FastAPI—connecting reliable systems with practical problems.
                 </p>
                 <div class="animate-fade-in flex flex-col sm:flex-row gap-4" style="animation-delay: 0.4s;">
                     <a href="#work" class="hero-cta-btn inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-medium w-fit">
@@ -142,9 +144,9 @@
                     </a>
                     <!-- Mobile social icons -->
                     <div class="flex lg:hidden gap-4 mt-4">
-                        <a href="https://github.com/sabin901" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003.404 1.02-.405 2.046-.67 3.003-.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
-                        <a href="https://linkedin.com/in/sabin-raut" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.71C.765 0 0 .765 0 1.71v20.58C0 23.235.765 24 1.71 24h20.515c.945 0 1.71-.765 1.71-1.71V1.71C24 .765 23.235 0 22.225 0z"/></svg></a>
-                        <a href="mailto:sabinraut343@gmail.com" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></a>
+                        <a href="https://github.com/sabin901" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all" aria-label="GitHub profile"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003.404 1.02-.405 2.046-.67 3.003-.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                        <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all" aria-label="LinkedIn profile"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.71C.765 0 0 .765 0 1.71v20.58C0 23.235.765 24 1.71 24h20.515c.945 0 1.71-.765 1.71-1.71V1.71C24 .765 23.235 0 22.225 0z"/></svg></a>
+                        <a href="mailto:sabinraut343@gmail.com" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all" aria-label="Email Sabin"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></a>
                     </div>
                 </div>
             </div>
@@ -159,94 +161,31 @@
                     Featured Projects
                 </h2>
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-                    Here are three projects I'm particularly proud of. Each one taught me something different about building systems that people actually use.
+                    Recent work across football analytics, desktop software, and personal productivity. Explore the live projects or open a case study to see how they work.
                 </p>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-                <!-- Featured Project 1: iRoutine -->
-                <article class="project-card">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Time-Series Analytics</span>
-                        <h3 class="text-xl font-bold mt-3 mb-3 text-white">iRoutine</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">A personal life operating system that connects time, money, energy, and focus. I built this because I wanted to understand my own patterns—and it turned into something that actually helps me make better decisions.</p>
-                            </div>
-                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
-                        <span>Next.js</span>
-                        <span>•</span>
-                        <span>FastAPI</span>
-                        <span>•</span>
-                        <span>Supabase</span>
-                            </div>
-                    <div class="flex gap-2">
-                        <button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="iroutine">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            Case Study
-                        </button>
-                        <a href="https://github.com/sabin901/iRoutine" target="_blank" class="btn-secondary text-sm px-4">
-                            <img src="images/github.png" alt="GitHub" class="w-4 h-4">
-                        </a>
-                        </div>
+<article class="project-card">
+                    <img class="project-thumbnail" src="images/projects/footlyzer.webp" alt="Footlyzer public website preview" width="1280" height="720" loading="lazy">
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Football Analytics</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">Footlyzer</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">Explore five European leagues, historical match events, and experimental forecasts in a source-aware football analysis workspace.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>Python</span> <span>•</span> <span>JavaScript</span> <span>•</span> <span>Data Viz</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="footlyzer" aria-label="Read Footlyzer case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/Football-Analyzer-" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="Footlyzer source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a><a href="https://sabin901.github.io/Football-Analyzer-/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm" aria-label="Visit Footlyzer">Live Site ↗</a></div>
                 </article>
-
-                <!-- Featured Project 2: Neural Muse Dashboard -->
-                <article class="project-card">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Real-Time Analytics</span>
-                        <h3 class="text-xl font-bold mt-3 mb-3 text-white">Neural Muse Dashboard</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">An EEG data analysis dashboard for medical and research teams. This project pushed me to think about how to visualize complex data in ways that are both accurate and intuitive.</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
-                        <span>TypeScript</span>
-                        <span>•</span>
-                        <span>React</span>
-                        <span>•</span>
-                        <span>Data Viz</span>
-                </div>
-                    <div class="flex gap-2">
-                        <button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="neural-muse">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            Case Study
-                        </button>
-                        <a href="https://github.com/sabin901/neural-muse-dashboard" target="_blank" class="btn-secondary text-sm px-4">
-                            <img src="images/github.png" alt="GitHub" class="w-4 h-4">
-                        </a>
+<article class="project-card">
+                    <img class="project-thumbnail" src="images/projects/pawi.webp" alt="Pawi public website preview" width="1280" height="720" loading="lazy">
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Desktop Companion · Public Beta</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">Pawi</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">An open-source desktop companion with nine characters, gentle care routines, and local settings. Built for macOS, Windows, and Linux.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>TypeScript</span> <span>•</span> <span>Rust</span> <span>•</span> <span>Tauri</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="pawi" aria-label="Read Pawi case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/Pawi" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="Pawi source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a><a href="https://sabin901.github.io/Pawi/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm" aria-label="Visit Pawi">Live Site ↗</a></div>
+                </article>
+<article class="project-card">
+                    <img class="project-thumbnail" src="images/projects/iroutine.webp" alt="iRoutine public website preview" width="1280" height="720" loading="lazy">
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Personal Analytics</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">iRoutine</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">A personal analytics dashboard connecting activity, planning, spending, energy, and reflection. Explore a sample workspace without an account.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>Next.js</span> <span>•</span> <span>FastAPI</span> <span>•</span> <span>Supabase</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="iroutine" aria-label="Read iRoutine case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/iRoutine" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="iRoutine source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a><a href="https://i-routine.vercel.app/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm" aria-label="Visit iRoutine">Live Site ↗</a></div>
+                </article>
             </div>
-                </article>
-
-                <!-- Featured Project 3: Application Manager -->
-                <article class="project-card">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Business Workflow</span>
-                        <h3 class="text-xl font-bold mt-3 mb-3 text-white">Application Manager</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">A job application tracker I built for myself and other college students. Sometimes the best projects solve problems you're actually facing—this one definitely did.</p>
-                        </div>
-                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
-                        <span>C#</span>
-                        <span>•</span>
-                        <span>.NET</span>
-                        <span>•</span>
-                        <span>SQL</span>
-                    </div>
-                    <div class="flex gap-2">
-                        <button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="application-manager">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            Case Study
-                        </button>
-                        <a href="https://github.com/sabin901/Application_Manager" target="_blank" class="btn-secondary text-sm px-4">
-                            <img src="images/github.png" alt="GitHub" class="w-4 h-4">
-                        </a>
-                        </div>
-                </article>
-                    </div>
-
-                        </div>
+        </div>
     </section>
 
     <!-- Work Section - Clean & Structured -->
@@ -267,10 +206,30 @@
                 <button type="button" class="project-filter-btn" data-filter="system">Systems</button>
                 <button type="button" class="project-filter-btn" data-filter="forecasting">Forecasting</button>
                 <button type="button" class="project-filter-btn" data-filter="web">Web</button>
+                <button type="button" class="project-filter-btn" data-filter="desktop">Desktop</button>
                     </div>
 
+            <p id="project-filter-status" class="sr-only" role="status" aria-live="polite">12 projects</p>
             <!-- Project Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<article class="project-card" data-category="analytics forecasting web">
+
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Football Analytics</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">Footlyzer</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">Explore five European leagues, historical match events, and experimental forecasts in a source-aware football analysis workspace.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>Python</span> <span>•</span> <span>JavaScript</span> <span>•</span> <span>Data Viz</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="footlyzer" aria-label="Read Footlyzer case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/Football-Analyzer-" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="Footlyzer source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a><a href="https://sabin901.github.io/Football-Analyzer-/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm" aria-label="Visit Footlyzer">Live Site ↗</a></div>
+                </article>
+<article class="project-card" data-category="desktop system">
+
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Desktop Companion · Public Beta</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">Pawi</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">An open-source desktop companion with nine characters, gentle care routines, and local settings. Built for macOS, Windows, and Linux.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>TypeScript</span> <span>•</span> <span>Rust</span> <span>•</span> <span>Tauri</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="pawi" aria-label="Read Pawi case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/Pawi" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="Pawi source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a><a href="https://sabin901.github.io/Pawi/" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm" aria-label="Visit Pawi">Live Site ↗</a></div>
+                </article>
+<article class="project-card" data-category="system web automation">
+
+                    <div class="mb-4"><span class="text-xs font-semibold text-gray-400 uppercase tracking-wide">AI & Business Systems · MVP</span><h3 class="text-xl font-bold mt-3 mb-3 text-white">Conversational Commerce Engine</h3><p class="text-gray-400 text-sm mb-4 leading-relaxed">A local MVP that turns seller conversations into structured orders, with a React dashboard and provider-ready messaging adapters.</p></div>
+                    <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400"><span>React</span> <span>•</span> <span>FastAPI</span> <span>•</span> <span>Postgres</span></div>
+                    <div class="project-actions flex gap-2"><button class="project-modal-btn flex-1 btn-primary text-sm flex items-center justify-center gap-2" data-project="commerce" aria-label="Read Conversational Commerce Engine case study"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>Case Study</button><a href="https://github.com/sabin901/Patra-" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm px-4" aria-label="Conversational Commerce Engine source on GitHub"><img src="images/github.png" alt="" class="w-4 h-4"></a></div>
+                </article>
                 <!-- Project 1: iRoutine -->
                 <div class="project-card" data-category="analytics web system">
                     <div class="mb-4">
@@ -292,19 +251,19 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/iRoutine" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/iRoutine" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
-                        <a href="https://i-routine.vercel.app/" target="_blank" class="btn-secondary text-sm px-4"> Live Site </a>
+                        <a href="https://i-routine.vercel.app/" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer"> Live Site </a>
                 </div>
             </div>
-                
+
                 <!-- Project 2: Neural Muse Dashboard -->
-                <div class="project-card" data-category="analytics fintech">
+                <div class="project-card" data-category="analytics web">
                     <div class="mb-4">
                         <span class="text-sm text-gray-400">Real-Time Analytics</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Neural Muse Dashboard</h3>
-                        <p class="text-gray-400 text-sm mb-4">EEG data analysis dashboard for medical and research teams with pattern recognition and interactive exploration.</p>
+                        <p class="text-gray-400 text-sm mb-4">A React and TypeScript dashboard exploring EEG data visualization and analysis.</p>
                         </div>
                     <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
                         <span>TypeScript</span>
@@ -320,18 +279,18 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/neural-muse-dashboard" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/neural-muse-dashboard" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
                         </div>
                         </div>
-                
+
                 <!-- Project 3: Application Manager -->
-                <div class="project-card" data-category="system">
+                <div class="project-card" data-category="system desktop">
                     <div class="mb-4">
                         <span class="text-sm text-gray-400">Business Workflow</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Application Manager</h3>
-                        <p class="text-gray-400 text-sm mb-4">Job application tracking system for college students with deadline management and interview scheduling.</p>
+                        <p class="text-gray-400 text-sm mb-4">A desktop project helping college students organize and track their job applications.</p>
                         </div>
                     <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
                         <span>C#</span>
@@ -347,18 +306,18 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/Application_Manager" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/Application_Manager" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
                         </div>
                         </div>
-                
+
                 <!-- Project 4: Ayur.me -->
                 <div class="project-card" data-category="web">
                     <div class="mb-4">
-                        <span class="text-sm text-gray-400">AI Health Platform</span>
+                        <span class="text-sm text-gray-400">Educational Wellness</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Ayur.me</h3>
-                        <p class="text-gray-400 text-sm mb-4">AI-powered Ayurvedic diagnostic system with comprehensive dosha analysis and holistic wellness recommendations.</p>
+                        <p class="text-gray-400 text-sm mb-4">An educational wellness platform with habit tracking, an assessment flow, and interactive anatomy exploration.</p>
                         </div>
                     <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
                         <span>React</span>
@@ -374,10 +333,10 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/Ayur.me" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/Ayur.me" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
-                        <a href="https://ayurme.vercel.app/" target="_blank" class="btn-secondary">
+                        <a href="https://ayurme.vercel.app/" target="_blank" class="btn-secondary" rel="noopener noreferrer">
                                Live Site
                           </a>
                     </div>
@@ -388,7 +347,7 @@
                     <div class="mb-4">
                         <span class="text-sm text-gray-400">E-commerce</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Mac Computer Service</h3>
-                        <p class="text-gray-400 text-sm mb-4">E-commerce website for computer repair services with booking system and payment integration.</p>
+                        <p class="text-gray-400 text-sm mb-4">A storefront and repair-booking frontend for an Apple device service business.</p>
                         </div>
                     <div class="flex flex-wrap gap-2 mb-4 text-xs text-gray-400">
                         <span>TypeScript</span>
@@ -396,7 +355,7 @@
                         <span>React</span>
                         <span>•</span>
                         <span>E-commerce</span>
-                        
+
 
                         </div>
                     <div class="flex gap-2">
@@ -406,17 +365,17 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/Mac-Computer-Service" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/Mac-Computer-Service" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
-                         <a href="https://www.maccomputerservice.com.np/" target="_blank" class="btn-secondary">
+                         <a href="https://www.maccomputerservice.com.np/" target="_blank" class="btn-secondary" rel="noopener noreferrer">
                                Live Site
                           </a>
                         </div>
                         </div>
-                
+
                 <!-- Project 6: Weather Analyzer -->
-                <div class="project-card" data-category="forecasting risk analytics">
+                <div class="project-card" data-category="forecasting analytics desktop">
                     <div class="mb-4">
                         <span class="text-sm text-gray-400">Forecasting & Risk</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Weather Analyzer</h3>
@@ -436,14 +395,14 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/Weather_Analyzer" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/Weather_Analyzer" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
                         </div>
                         </div>
-                
+
                 <!-- Project 7: Muse S Data Visualization -->
-                <div class="project-card" data-category="analytics automation">
+                <div class="project-card" data-category="analytics desktop">
                     <div class="mb-4">
                         <span class="text-sm text-gray-400">Real-Time Analytics</span>
                         <h3 class="text-xl font-bold mt-2 mb-2 text-white">Muse S Data Visualization</h3>
@@ -463,14 +422,14 @@
                             </svg>
                             Case Study
                         </button>
-                        <a href="https://github.com/sabin901/amused-py-main22" target="_blank" class="btn-secondary text-sm px-4">
+                        <a href="https://github.com/sabin901/amused-py-main22" target="_blank" class="btn-secondary text-sm px-4" rel="noopener noreferrer">
                             <img src="images/github.png" alt="GitHub" class="w-4 h-4">
                         </a>
                 </div>
             </div>
 
                 <!-- Project 8: SCSU Event Recommender -->
-                <div class="project-card" data-category="system">
+                <div class="project-card" data-category="system desktop">
                     <div class="mb-4">
                         <h3 class="text-xl font-bold mb-2 text-white">SCSU Event Recommender</h3>
                         <p class="text-gray-400 text-sm mb-4">Recommendation system for campus events based on student interests and preferences.</p>
@@ -480,11 +439,11 @@
                         <span>•</span>
                         <span>Recommendation</span>
                     </div>
-                    <a href="https://github.com/sabin901/SCSUEventRecommender" target="_blank" class="hover:underline text-sm font-medium" style="color: #6EE7B7;">GitHub</a>
+                    <a href="https://github.com/sabin901/SCSUEventRecommender" target="_blank" class="hover:underline text-sm font-medium" style="color: var(--accent-mint);" rel="noopener noreferrer">GitHub</a>
                     </div>
-                
+
                 <!-- Project 9: Age Calculator -->
-                <div class="project-card" data-category="system">
+                <div class="project-card" data-category="system desktop">
                     <div class="mb-4">
                         <h3 class="text-xl font-bold mb-2 text-white">Age Calculator</h3>
                         <p class="text-gray-400 text-sm mb-4">Utility tool for precise age and date calculations with multiple calculation modes.</p>
@@ -494,7 +453,7 @@
                         <span>•</span>
                         <span>Utility</span>
                     </div>
-                    <a href="https://github.com/sabin901/Age_Calculator" target="_blank" class="hover:underline text-sm font-medium" style="color: #6EE7B7;">GitHub</a>
+                    <a href="https://github.com/sabin901/Age_Calculator" target="_blank" class="hover:underline text-sm font-medium" style="color: var(--accent-mint);" rel="noopener noreferrer">GitHub</a>
                 </div>
             </div>
         </div>
@@ -515,7 +474,7 @@
                 <div class="project-card group">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: #6EE7B7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                 </svg>
                             </div>
@@ -571,7 +530,7 @@
                 <div class="project-card group">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: #6EE7B7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                 </svg>
                             </div>
@@ -627,7 +586,7 @@
                 <div class="project-card group">
                     <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
                         <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: #6EE7B7;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                             </svg>
                         </div>
@@ -695,41 +654,41 @@
                 </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <article class="project-card article-card cursor-pointer group" data-article="risk-dashboard">
+                <article class="project-card article-card cursor-pointer group" data-article="risk-dashboard" role="button" tabindex="0" aria-haspopup="dialog">
                     <div class="mb-4">
                         <span class="text-xs font-semibold text-gray-400 mb-2 block">Technical Guide</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: #6EE7B7;">How to Build a Financial Risk Dashboard</h3>
+                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">How to Build a Financial Risk Dashboard</h3>
                         <p class="text-gray-400 text-sm mb-4 leading-relaxed">Step-by-step guide to building a comprehensive risk dashboard using Python, SQL, and Tableau. Learn how to connect data sources, calculate risk metrics, and create interactive visualizations.</p>
                 </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: #6EE7B7;">
+                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
                         <span>Read Article</span>
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
             </div>
                 </article>
-                
-                <article class="project-card article-card cursor-pointer group" data-article="arima-regression">
+
+                <article class="project-card article-card cursor-pointer group" data-article="arima-regression" role="button" tabindex="0" aria-haspopup="dialog">
                     <div class="mb-4">
                         <span class="text-xs font-semibold text-gray-400 mb-2 block">Data Science</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: #6EE7B7;">ARIMA vs Regression for Forecasting</h3>
+                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">ARIMA vs Regression for Forecasting</h3>
                         <p class="text-gray-400 text-sm mb-4 leading-relaxed">Comparing time-series forecasting methods for financial data with practical examples. When to use ARIMA, when regression works better, and how to choose the right approach.</p>
                     </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: #6EE7B7;">
+                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
                         <span>Read Article</span>
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                 </div>
                 </article>
-                
-                <article class="project-card article-card cursor-pointer group" data-article="sec-10k">
+
+                <article class="project-card article-card cursor-pointer group" data-article="sec-10k" role="button" tabindex="0" aria-haspopup="dialog">
                     <div class="mb-4">
                         <span class="text-xs font-semibold text-gray-400 mb-2 block">Financial Analysis</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: #6EE7B7;">Analyzing SEC 10-K Filings with Python</h3>
+                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">Analyzing SEC 10-K Filings with Python</h3>
                         <p class="text-gray-400 text-sm mb-4 leading-relaxed">Automated extraction and analysis of SEC filings using Python and financial statement analysis. Extract key metrics, calculate ratios, and identify trends programmatically.</p>
                     </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: #6EE7B7;">
+                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
                         <span>Read Article</span>
                         <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -737,16 +696,8 @@
                 </div>
                 </article>
                 </div>
-                
-            <!-- Article Modal -->
-            <div id="article-modal-overlay" class="modal-overlay hidden">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button class="modal-close" id="article-modal-close" type="button" aria-label="Close">&times;</button>
-                </div>
-                    <div id="article-modal-body" class="modal-body"></div>
-                </div>
-            </div>
+
+
         </div>
     </section>
 
@@ -827,11 +778,11 @@
                 </p>
                 <p class="text-gray-300">
                     <strong class="text-white">Email:</strong> <a href="mailto:sabinraut343@gmail.com" class="text-accent hover:opacity-90">sabinraut343@gmail.com</a><br>
-                    <strong class="text-white">LinkedIn:</strong> <a href="https://linkedin.com/in/sabin-raut" target="_blank" rel="noopener noreferrer" class="text-accent hover:opacity-90">linkedin.com/in/sabin-raut</a>
+                    <strong class="text-white">LinkedIn:</strong> <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" rel="noopener noreferrer" class="text-accent hover:opacity-90">linkedin.com/in/sabin-raut-</a>
                 </p>
                         </div>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://linkedin.com/in/sabin-raut" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2">
+                <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" rel="noopener noreferrer" class="btn-primary inline-flex items-center justify-center gap-2">
                     <img src="images/linkedin.png" alt="" class="w-5 h-5"> LinkedIn
                 </a>
                 <a href="https://github.com/sabin901" target="_blank" rel="noopener noreferrer" class="btn-secondary inline-flex items-center justify-center gap-2">
@@ -845,20 +796,21 @@
     </section>
 
     <!-- Footer - Enhanced -->
+    </main>
     <footer class="bg-charcoal text-gray-400 py-16 border-t-2" style="border-color: rgba(110, 231, 183, 0.2);">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
                 <div class="md:col-span-2">
-                    <h3 class="text-2xl font-bold text-white mb-4" style="color: #6EE7B7;">Sabin Raut</h3>
+                    <h3 class="text-2xl font-bold text-white mb-4" style="color: var(--accent-mint);">Sabin Raut</h3>
                     <p class="text-sm text-gray-400 mb-4 leading-relaxed">Information Systems & Finance student building fintech, data analytics, and business intelligence systems. Passionate about data science and turning complex data into actionable insights.</p>
                     <div class="flex gap-4">
-                        <a href="https://linkedin.com/in/sabin-raut" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);">
+                        <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
                             <img src="images/linkedin-contact.png" alt="LinkedIn" class="w-5 h-5 filter brightness-0 invert">
                         </a>
-                        <a href="https://github.com/sabin901" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);">
+                        <a href="https://github.com/sabin901" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
                             <img src="images/github-contact.png" alt="GitHub" class="w-5 h-5 filter brightness-0 invert">
                         </a>
-                        <a href="mailto:sabinraut343@gmail.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);">
+                        <a href="mailto:sabinraut343@gmail.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
                             <img src="images/email-contact.png" alt="Email" class="w-5 h-5 filter brightness-0 invert">
                         </a>
                     </div>
@@ -878,7 +830,7 @@
                     <h4 class="text-lg font-bold text-white mb-4">Contact</h4>
                     <ul class="space-y-3 text-sm">
                         <li>
-                            <a href="mailto:sabinraut343@gmail.com" class="hover:text-mint transition-colors" style="--hover-color: #6EE7B7;">
+                            <a href="mailto:sabinraut343@gmail.com" class="hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">
                                 sabinraut343@gmail.com
                             </a>
                         </li>
@@ -887,13 +839,13 @@
                 </div>
             </div>
             <div class="text-center pt-8 border-t-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                <p class="text-sm text-gray-500">&copy; 2024 Sabin Raut. All rights reserved.</p>
+                <p class="text-sm text-gray-500">&copy; <span id="copyright-year">2026</span> Sabin Raut. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <!-- Project Modals -->
-    <div id="modal-overlay" class="modal-overlay hidden">
+    <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="project-modal-title" tabindex="-1">
         <div class="modal-content">
             <div class="modal-header">
                 <button class="modal-close" type="button" aria-label="Close">&times;</button>
@@ -901,6 +853,16 @@
             <div id="modal-body" class="modal-body"></div>
         </div>
     </div>
+
+            <!-- Article Modal -->
+            <div id="article-modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="article-modal-title" tabindex="-1">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button class="modal-close" id="article-modal-close" type="button" aria-label="Close">&times;</button>
+                </div>
+                    <div id="article-modal-body" class="modal-body"></div>
+                </div>
+            </div>
 
     <!-- Inline Fallback Script for Loading Screen -->
     <script>
@@ -917,7 +879,7 @@
                     }, 500);
                 }
             }
-            
+
             // Multiple fallbacks to ensure it hides
             if (document.readyState === 'complete') {
                 setTimeout(hideLoadingScreen, 800);
@@ -929,7 +891,7 @@
                     setTimeout(hideLoadingScreen, 800);
                 });
             }
-            
+
             // Ultimate fallback
             setTimeout(hideLoadingScreen, 2000);
         })();

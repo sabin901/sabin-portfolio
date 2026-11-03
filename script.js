@@ -2,65 +2,55 @@
 //
 
 document.addEventListener("DOMContentLoaded", () => {
-    // ===== LOADING SCREEN =====
-    const loadingScreen = document.getElementById("loading-screen");
-    const loadingScreenAlt = document.getElementById("loadingScreen");
-    
-    function hideLoadingScreen() {
-        // Hide both possible loading screen IDs
-        [loadingScreen, loadingScreenAlt].forEach(screen => {
-            if (screen) {
-                screen.style.opacity = "0";
-                screen.style.visibility = "hidden";
-                screen.style.transition = "opacity 0.5s ease, visibility 0.5s ease";
-        setTimeout(() => {
-                    screen.classList.add("hidden");
-                    screen.style.display = "none";
-            }, 500);
-            }
-        });
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const scrollBehavior = () => reducedMotion.matches ? 'auto' : 'smooth';
+    const themeToggle = document.getElementById('theme-toggle');
+    function updateThemeButton() {
+        const light = document.documentElement.dataset.theme === 'light';
+        themeToggle.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} mode`);
+        themeToggle.setAttribute('aria-pressed', String(light));
+        document.querySelector('meta[name="theme-color"]').content = light ? '#f5f8fc' : '#0A1A2F';
     }
-    
-    // Hide after page load
-    if (document.readyState === 'complete') {
-        setTimeout(hideLoadingScreen, 600);
-    } else {
-        window.addEventListener("load", () => {
-            setTimeout(hideLoadingScreen, 600);
-        });
-    }
-    
-    // Fallback timeout - ensure it always hides
-    setTimeout(hideLoadingScreen, 1500);
+    themeToggle.hidden = false;
+    updateThemeButton();
+    themeToggle.addEventListener('click', () => {
+        const theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        document.documentElement.dataset.theme = theme;
+        try { localStorage.setItem('portfolio-theme', theme); } catch { /* Optional preference. */ }
+        updateThemeButton();
+    });
+    document.getElementById('copyright-year').textContent = new Date().getFullYear();
 
+    // Keep the original loader, but release it as soon as the page is ready.
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
+        setTimeout(() => loadingScreen.classList.add('hidden'), reducedMotion.matches ? 0 : 500);
+    }
 
     // ===== MOBILE MENU =====
     const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
     const mobileMenu = document.getElementById("mobile-menu");
     
-    if (mobileMenuToggle && mobileMenu) {
-        mobileMenuToggle.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-            // Add animation
-            if (!mobileMenu.classList.contains("hidden")) {
-                mobileMenu.style.animation = "slideDown 0.3s ease-out";
-            }
-        });
-        
-        const mobileLinks = mobileMenu.querySelectorAll("a");
-        mobileLinks.forEach(link => {
-            link.addEventListener("click", () => {
-                mobileMenu.classList.add("hidden");
-            });
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener("click", (e) => {
-            if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                mobileMenu.classList.add("hidden");
-            }
-        });
+    function closeMobileMenu(restoreFocus = false) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenuToggle.setAttribute('aria-label', 'Open menu');
+        if (restoreFocus) mobileMenuToggle.focus();
     }
+    mobileMenuToggle.addEventListener('click', () => {
+        const open = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', !open);
+        mobileMenuToggle.setAttribute('aria-expanded', String(open));
+        mobileMenuToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+        if (open && !reducedMotion.matches) mobileMenu.style.animation = 'slideDown 0.3s ease-out';
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => closeMobileMenu()));
+    document.addEventListener('click', (event) => {
+        if (!mobileMenu.contains(event.target) && !mobileMenuToggle.contains(event.target)) closeMobileMenu();
+    });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', () => closeMobileMenu());
 
     // ===== SMOOTH SCROLLING =====
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -68,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const href = this.getAttribute("href");
             if (href === "#" || href === "#home") {
             e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                window.scrollTo({ top: 0, behavior: scrollBehavior() });
                 return;
             }
             
@@ -77,7 +67,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 e.preventDefault();
                 const offset = 80;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                window.scrollTo({ top: targetPosition, behavior: "smooth" });
+                window.scrollTo({ top: targetPosition, behavior: scrollBehavior() });
+                target.setAttribute('tabindex', '-1');
+                target.focus({ preventScroll: true });
+                target.addEventListener('blur', () => target.removeAttribute('tabindex'), { once: true });
             }
         });
     });
@@ -87,38 +80,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const workSection = document.getElementById("work");
     const projectCards = workSection ? workSection.querySelectorAll(".project-card[data-category]") : [];
 
-    const categoryMap = {
-        'all': ['analytics', 'fintech', 'system', 'automation', 'forecasting', 'risk', 'web'],
-        'analytics': ['analytics', 'fintech', 'automation'],
-        'system': ['system', 'automation'],
-        'forecasting': ['forecasting', 'risk'],
-        'web': ['web']
-    };
-
+    const filterStatus = document.getElementById('project-filter-status');
+    const filterTimers = new WeakMap();
     filterButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const filter = btn.getAttribute("data-filter");
-            
-            filterButtons.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            
-            projectCards.forEach((card, index) => {
-                const categories = (card.getAttribute('data-category') || '').split(/\s+/).filter(Boolean);
-                const targets = categoryMap[filter] || [];
-                const shouldShow = filter === 'all' || targets.some(cat => categories.includes(cat));
-                
-                if (shouldShow) {
-                    card.style.display = 'block';
-                        card.style.opacity = '1';
+        btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
+        btn.addEventListener('click', () => {
+            const filter = btn.dataset.filter;
+            filterButtons.forEach(button => {
+                button.classList.toggle('active', button === btn);
+                button.setAttribute('aria-pressed', String(button === btn));
+            });
+            let visible = 0;
+            projectCards.forEach(card => {
+                clearTimeout(filterTimers.get(card));
+                const show = filter === 'all' || card.dataset.category.split(/\s+/).includes(filter);
+                if (show) {
+                    visible++;
+                    card.hidden = false;
+                    card.style.display = '';
+                    card.style.opacity = '1';
                     card.style.transform = 'translateY(0) scale(1)';
+                    card.removeAttribute('aria-hidden');
+                    card.inert = false;
                 } else {
                     card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px) scale(0.95)';
-                    setTimeout(() => { card.style.display = 'none'; }, 300);
+                    card.style.transform = reducedMotion.matches ? 'none' : 'translateY(20px) scale(0.95)';
+                    card.setAttribute('aria-hidden', 'true');
+                    card.inert = true;
+                    if (reducedMotion.matches) card.hidden = true;
+                    else filterTimers.set(card, setTimeout(() => { card.hidden = true; }, 250));
                 }
             });
+            filterStatus.textContent = `${visible} project${visible === 1 ? '' : 's'}${filter === 'all' ? '' : ' in ' + btn.textContent}`;
         });
     });
+    filterStatus.textContent = `${projectCards.length} projects`;
 
     // ===== PROJECT MODALS =====
     const projectModalBtns = document.querySelectorAll('.project-modal-btn');
@@ -126,216 +122,370 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalBody = document.getElementById('modal-body');
     const modalContent = modalOverlay ? modalOverlay.querySelector('.modal-content') : null;
     
-    // Function to close project modal
-    function closeProjectModal() {
-        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
-            modalOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-            if (history.state?.modal === 'project') {
-                history.back();
-            }
+    // Both existing modal types share focus management and browser Back support.
+    let activeDialog = null;
+    let modalTrigger = null;
+    let inertElements = [];
+    let previousOverflow = '';
+    let waitingForHistory = false;
+    function openDialog(dialog, trigger) {
+        if (waitingForHistory) return;
+        activeDialog = dialog;
+        modalTrigger = trigger;
+        previousOverflow = document.body.style.overflow;
+        dialog.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        inertElements = [...document.body.children].filter(element => element !== dialog && !['SCRIPT','STYLE'].includes(element.tagName)).map(element => [element, element.inert]);
+        inertElements.forEach(([element]) => { element.inert = true; });
+        dialog.querySelector('.modal-body').scrollTop = 0;
+        dialog.querySelector('.modal-close').focus({ preventScroll: true });
+        history.pushState({ ...history.state, portfolioModal: dialog.id }, '', window.location.href);
+    }
+    function closeDialog(navigateBack = true) {
+        if (!activeDialog) return;
+        const id = activeDialog.id;
+        activeDialog.classList.add('hidden');
+        activeDialog = null;
+        document.body.style.overflow = previousOverflow;
+        inertElements.forEach(([element, wasInert]) => { element.inert = wasInert; });
+        inertElements = [];
+        modalTrigger?.focus({ preventScroll: true });
+        if (navigateBack && history.state?.portfolioModal === id) {
+            waitingForHistory = true;
+            history.back();
         }
     }
+    function closeProjectModal() { closeDialog(); }
+    document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Tab' || !activeDialog) return;
+        const controls = [...activeDialog.querySelectorAll('a[href], button:not([disabled]), [tabindex="0"]')].filter(element => element.getClientRects().length);
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    });
 
     const projectData = {
-        "iroutine": {
-            title: "iRoutine - Personal Life Operating System",
-            category: "Time-Series Analytics",
-            problem: "Personal productivity tools are fragmented—time tracking, expense management, energy monitoring, and focus analysis exist in separate silos. Users can't see how time spent affects energy, how expenses correlate with productivity, or how interruptions impact focus. There's no unified system that connects these domains to provide actionable insights.",
-            context: "Built a personal life operating system that connects time, money, energy, and focus with cross-domain intelligence. The system needed to handle time-series data for multiple users with 1000+ data points per day, provide real-time dashboard updates, and offer explainable analytics where users understand how insights are calculated.",
-            approach: "Developed a full-stack application with Next.js 14 frontend (TypeScript) and FastAPI backend. Implemented Supabase PostgreSQL with optimized indexes for time-range queries. Built analytics engine calculating cross-domain correlations (time × energy × focus). Added PDF/CSV export for weekly reviews and data portability. Used row-level security (RLS) for data isolation and JWT token validation.",
-            technologies: ["Next.js 14", "TypeScript", "FastAPI", "Supabase", "PostgreSQL", "Time-Series Analysis", "Data Visualization"],
-            results: {
-                "Weekly Reviews": "Enabled PDF/CSV exports, making insights shareable and reducing friction for reflection",
-                "Cross-Domain Intelligence": "Users can see how time spent correlates with energy levels and focus",
-                "Performance": "Real-time dashboard updates with < 500ms query times for time-range data",
-                "Explainability": "Every insight shows the underlying calculation"
-            },
-            lessons: "Normalized schema with separate tables for time, expenses, energy, and focus. Junction table for cross-domain relationships. Materialized views for common correlation queries. Handled missing data gracefully (null values don't break correlations). Timezone handling for consistent time-series analysis. Next: add queueing for heavy correlation calculations, Redis caching, and observability metrics.",
-            links: {
-                github: "https://github.com/sabin901/iRoutine",
-                demo: "#"
-            }
+    "footlyzer": {
+        "title": "Footlyzer — Football Analysis Workspace",
+        "category": "Football Analytics",
+        "problem": "Football results and event data are easier to interpret when comparisons, context, and source information are available together.",
+        "context": "A workspace covering five European leagues, a licensed historical archive, experimental forecasts, and private evidence briefs.",
+        "approach": "Python prepares the datasets and forecasts for a static JavaScript interface. Users can explore recorded results, compare teams, inspect historical events, and import permitted CSV files locally.",
+        "technologies": [
+            "Python",
+            "JavaScript",
+            "Data Visualization",
+            "GitHub Actions"
+        ],
+        "results": {
+            "Historical archive": "1,826 matches from the 2017/18 research archive",
+            "Analysis": "League results, event exploration, and team comparisons",
+            "Private workflow": "Browser-local evidence briefs and CSV imports",
+            "Forecasts": "Experimental models with coverage and freshness checks"
         },
-        "neural-muse": {
-            title: "Neural Muse Dashboard - Real-Time EEG Analytics",
-            category: "Real-Time Analytics",
-            problem: "Medical and research teams need to analyze EEG data in real-time, but existing tools are either too complex (MATLAB, Python scripts) or too simple (basic CSV viewers). There's no interactive dashboard that allows pattern recognition, filtering, and exploration of high-frequency EEG signals (1000+ datapoints per second) with smooth visualization.",
-            context: "Built an EEG data analysis dashboard for medical and research teams with pattern recognition and interactive exploration. The system needed to handle 1000+ datapoints per second from BLE devices, provide real-time visualization without lag, and support long recording sessions with memory-efficient data structures.",
-            approach: "Developed a TypeScript/React frontend with Canvas API for high-performance rendering. Implemented platform-specific BLE integration (CoreBluetooth on macOS, Web Bluetooth API). Used circular buffer data structure for efficient memory management. Added real-time filtering and pattern recognition algorithms. Implemented CSV export for post-session analysis.",
-            technologies: ["TypeScript", "React", "Canvas API", "BLE", "Data Visualization", "Signal Processing"],
-            results: {
-                "Real-Time Performance": "Visualization of 1000+ datapoints per second with smooth 60fps rendering",
-                "Cross-Platform": "Works identically on macOS and Windows",
-                "Memory Efficiency": "Handles 1-hour sessions without performance degradation",
-                "Professional GUI": "Responsive controls suitable for medical/research use"
-            },
-            lessons: "Circular buffer to prevent memory overflow during long sessions. Canvas API instead of SVG for better performance with 1000+ datapoints. RequestAnimationFrame for smooth 60fps updates. Handled BLE disconnections gracefully with auto-reconnect logic. CSV file size grows ~1MB per minute—added compression warning. Next: add JSON/HDF5 export formats, real-time DSP filters, and cloud sync.",
-            links: {
-                github: "https://github.com/sabin901/neural-muse-dashboard",
-                demo: "#"
-            }
+        "lessons": "Historical player records are labeled as historical. Forecasts are experimental, and current results may be incomplete. Source attribution and method documentation are available in the application.",
+        "links": {
+            "github": "https://github.com/sabin901/Football-Analyzer-",
+            "demo": "https://sabin901.github.io/Football-Analyzer-/"
         },
-        "application-manager": {
-            title: "Application Manager - Job Tracking System",
-            category: "Business Workflow",
-            problem: "College students applying to jobs struggle to track application status, deadlines, interview schedules, and follow-ups. Spreadsheets are error-prone and don't provide reminders. There's no system that combines application tracking with deadline management and interview scheduling in one place.",
-            context: "Built a job application tracking system for college students with deadline management, status tracking, and interview scheduling. The system needed to support 100+ applications per user with fast search and filtering, provide reliable deadline reminders, and ensure data integrity with proper access controls.",
-            approach: "Developed a C#/.NET desktop application with Windows Forms for native UI. Implemented SQL Server database with normalized schema (applications, companies, interviews). Built business logic layer for status transitions and validation using state machine pattern. Added reminder system with notifications for upcoming deadlines. Created search and filter functionality for quick application lookup.",
-            technologies: ["C#", ".NET", "SQL Server", "Windows Forms", "State Machine Pattern"],
-            results: {
-                "Tracking Speed": "70% faster application tracking compared to spreadsheet-based methods",
-                "Deadline Management": "Reliable reminders reduced missed application deadlines by 90%",
-                "Search Functionality": "Quick lookup of 100+ applications",
-                "Data Integrity": "State machine prevents invalid status transitions"
-            },
-            lessons: "3NF normalized schema: separate tables for applications, companies, interviews, and reminders. State machine pattern for application status (Applied → Interview → Offer → Rejected). Background thread checks for upcoming deadlines every 5 minutes. Indexed database queries for fast search. Next: port to web (React + .NET API), add cloud sync, analytics dashboard, and email integration.",
-            links: {
-                github: "https://github.com/sabin901/Application_Manager",
-                demo: "#"
-            }
+        "image": "images/projects/footlyzer.webp"
+    },
+    "pawi": {
+        "title": "Pawi — Virtual Desktop Companion",
+        "category": "Desktop Application · Public Beta",
+        "problem": "A desktop can feel more personal with a small companion that reacts to work and encourages gentle breaks.",
+        "context": "An open-source virtual pet with nine companions, care routines, local settings, and builds for macOS, Windows, and Linux.",
+        "approach": "A TypeScript interface and Tauri/Rust desktop layer support a transparent companion overlay, animation states, tray controls, and local preferences.",
+        "technologies": [
+            "TypeScript",
+            "Rust",
+            "Tauri",
+            "Desktop Development"
+        ],
+        "results": {
+            "Companions": "Nine built-in dogs and cats",
+            "Everyday use": "Feed, play, rest, reminders, and Pomodoro reactions",
+            "Local settings": "No account required",
+            "Release status": "Public beta / release candidates"
         },
-        "ayur": {
-            title: "Ayur.me - AI-Powered Ayurvedic Diagnostic System",
-            category: "AI Health Platform",
-            problem: "Users need personalized Ayurvedic insights based on classical Sanskrit texts, with comprehensive dosha analysis, seasonal guidance, and holistic wellness recommendations. Existing solutions lack authenticity and don't ground recommendations in classical texts.",
-            context: "Built a comprehensive AI-powered Ayurvedic diagnostic system grounded in classical Sanskrit texts (Charaka Samhita, Sushruta Samhita, Ashtanga Hridayam, Bhava Prakasha, Madhava Nidanam). The system needed to provide personalized dosha analysis, seasonal guidance, disease database, and holistic wellness recommendations based on authentic Ayurvedic principles.",
-            approach: "Developed a full-stack application with React 18 + TypeScript frontend and Node.js/Express backend with MongoDB. Implemented comprehensive dosha assessment (22 questions across 4 categories with weighted scoring), 15 dosha subtypes with Sanskrit names, classical text integration with verse attribution, disease database from public domain texts, 3D anatomy models, yoga library, and PDF report generation. Used Framer Motion for animations, Three.js for 3D models, and comprehensive validation protocols.",
-            technologies: ["React 18", "TypeScript", "Node.js/Express", "MongoDB", "Vite", "Tailwind CSS", "Framer Motion", "Three.js", "Shadcn/UI"],
-            results: {
-                "Dosha Assessment": "22 questions with weighted scoring",
-                "Classical Integration": "15 dosha subtypes with Sanskrit names",
-                "Disease Database": "Comprehensive Ayurvedic disease database",
-                "Performance": "Analysis < 2 seconds, optimized algorithms",
-                "Authenticity": "All recommendations from pre-1880 classical texts"
-            },
-            lessons: "Classical text integration requires careful cross-verification with critical editions. Sanskrit rendering and transliteration improve accessibility. Disease database scraping from PDFs requires OCR and careful parsing. 3D models enhance educational value. Performance optimization crucial for real-time analysis. Next: add multi-language support (Hindi, Sanskrit), advanced visual analysis with AI, and expert consultation integration.",
-            links: {
-                github: "https://github.com/sabin901/Ayur.me",
-                demo: "#"
-            }
+        "lessons": "Input reactions use counts and geometry rather than typed content. Platform compatibility and installation details are documented on the website.",
+        "links": {
+            "github": "https://github.com/sabin901/Pawi",
+            "demo": "https://sabin901.github.io/Pawi/"
         },
-        "mac-service": {
-            title: "Mac Computer Service - E-commerce Platform",
-            category: "E-commerce",
-            problem: "Computer repair service businesses need an online presence for booking appointments, managing services, and processing payments. Existing solutions are either too generic or don't integrate booking with service management.",
-            context: "Built an e-commerce website for computer repair services with booking system, payment integration, and service management. The system needed to handle service listings, appointment scheduling, payment processing, and customer management.",
-            approach: "Developed a TypeScript/React application with modern UI/UX. Implemented booking system with calendar integration, payment gateway integration, service management dashboard, and customer portal. Used responsive design for mobile and desktop access.",
-            technologies: ["TypeScript", "React", "E-commerce", "Payment Integration", "Booking System"],
-            results: {
-                "Bookings": "200+ successful bookings processed",
-                "User Experience": "Streamlined booking and payment flow",
-                "Service Management": "Efficient service tracking and management"
-            },
-            lessons: "Payment integration requires careful security handling. Booking systems need conflict detection and calendar management. Service management benefits from clear status tracking. Next: add customer reviews, service history tracking, and automated reminders.",
-            links: {
-                github: "https://github.com/sabin901/Mac-Computer-Service",
-                demo: "#"
-            }
+        "image": "images/projects/pawi.webp"
+    },
+    "commerce": {
+        "title": "Conversational Commerce Engine",
+        "category": "AI & Business Systems · Local MVP",
+        "problem": "Social-commerce sellers need to keep conversations, inventory, orders, and fulfillment connected.",
+        "context": "A local MVP demonstrating a conversation-to-order workflow, with mock messaging and provider-ready adapters.",
+        "approach": "React provides the seller dashboard. FastAPI handles normalized events, structured order extraction, inventory, permissions, and audit records. SQLite supports local tests and Postgres is available for runtime storage.",
+        "technologies": [
+            "React",
+            "FastAPI",
+            "Python",
+            "Postgres"
+        ],
+        "results": {
+            "Workflow": "Mock message → draft order → payment status → fulfillment",
+            "Dashboard": "Inbox, inventory, orders, and human takeover",
+            "Storage": "SQLite for local use; Postgres runtime support",
+            "Integration stage": "Messaging and payment adapters require provider setup"
         },
-        "weather-analyzer": {
-            title: "Weather Analyzer - Time-Series Forecasting",
-            category: "Forecasting & Risk",
-            problem: "Weather data analysis requires time-series forecasting to predict patterns, assess risks, and make informed decisions. Existing tools don't combine forecasting with risk assessment in an accessible way.",
-            context: "Built a time-series forecasting system for weather patterns with trend analysis, risk assessment, and predictive modeling. The system needed to handle historical weather data, apply forecasting algorithms, and provide risk analysis.",
-            approach: "Developed a C# application with time-series analysis algorithms. Implemented trend analysis, forecasting models (ARIMA, regression), risk assessment metrics, and data visualization. Focused on accuracy and explainability of predictions.",
-            technologies: ["C#", "Time-Series Analysis", "Forecasting", "Risk Analysis", "Data Visualization"],
-            results: {
-                "Forecasting Accuracy": "85%+ trend accuracy",
-                "Risk Assessment": "Comprehensive risk metrics",
-                "Data Processing": "Efficient time-series analysis"
-            },
-            lessons: "Time-series forecasting requires careful data preprocessing and feature engineering. ARIMA models work well for stationary data, regression for trend analysis. Risk assessment needs clear metric definitions. Next: add machine learning models, real-time data integration, and advanced visualization.",
-            links: {
-                github: "https://github.com/sabin901/Weather_Analyzer",
-                demo: "#"
-            }
+        "lessons": "The repository describes this as a local MVP/pilot scaffold. Real messaging and payment services require credentials, provider approval, and further production validation.",
+        "links": {
+            "github": "https://github.com/sabin901/Patra-",
+            "demo": null
         },
-        "muse-s": {
-            title: "Muse S Data Visualization - Real-Time BLE Analytics",
-            category: "Real-Time Analytics",
-            problem: "Real-time data visualization from BLE devices requires efficient data handling, smooth rendering, and cross-platform compatibility. Existing solutions don't handle high-frequency data streams effectively.",
-            context: "Built a real-time data visualization system with BLE device integration, live streaming, and interactive analytics dashboard. The system needed to handle high-frequency data streams, provide smooth visualization, and support cross-platform use.",
-            approach: "Developed a Python application with BLE integration, real-time data processing, and visualization. Implemented efficient data structures for streaming data, cross-platform BLE support, and interactive dashboard. Added CSV export for data analysis.",
-            technologies: ["Python", "BLE", "Data Visualization", "Real-Time Processing", "Cross-Platform"],
-            results: {
-                "Real-Time Processing": "Handles high-frequency data streams efficiently",
-                "Cross-Platform": "Works identically on macOS and Windows",
-                "Data Export": "CSV export for post-session analysis"
-            },
-            lessons: "BLE communication has platform-specific limitations—macOS CoreBluetooth achieves lower sample rates than Windows. Real-time visualization requires efficient data structures and memory management. CSV file size grows ~1MB per minute—consider compression for long sessions. Professional GUI requires smooth animations and responsive controls. Next: add data export formats (JSON, HDF5), real-time filtering, and cloud sync capabilities.",
-            links: {
-                github: "https://github.com/sabin901/amused-py-main22",
-                demo: "#"
-            }
-        }
-    };
+        "image": null
+    },
+    "iroutine": {
+        "title": "iRoutine — Personal Analytics Dashboard",
+        "category": "Personal Analytics",
+        "problem": "Time, spending, energy, and planning often live in separate tools, making daily patterns difficult to see.",
+        "context": "A dashboard connecting activity logs, interruptions, finances, habits, goals, and reflection.",
+        "approach": "A Next.js and TypeScript frontend connects to a FastAPI backend and Supabase Postgres/Auth. The public demo seeds sample data in the browser for exploration without an account.",
+        "technologies": [
+            "Next.js",
+            "TypeScript",
+            "FastAPI",
+            "Supabase",
+            "PostgreSQL"
+        ],
+        "results": {
+            "Daily loop": "Planning, activity, energy, and reflection",
+            "Finances": "Transactions, budgets, savings goals, and export",
+            "Insights": "Patterns across time, spending, and focus",
+            "Demo": "Public sample workspace"
+        },
+        "lessons": "The project includes frontend journey tests and backend tests. User data isolation and clear sample-data behavior are part of the implementation.",
+        "links": {
+            "github": "https://github.com/sabin901/iRoutine",
+            "demo": "https://i-routine.vercel.app/"
+        },
+        "image": "images/projects/iroutine.webp"
+    },
+    "neural-muse": {
+        "title": "Neural Muse Dashboard",
+        "category": "EEG Data Visualization",
+        "problem": "EEG signals benefit from an interface that makes complex data easier to explore.",
+        "context": "A TypeScript and React project focused on EEG data visualization.",
+        "approach": "Built with Vite, React, TypeScript, Tailwind CSS, and shadcn/ui. The source repository is available for exploring the implementation.",
+        "technologies": [
+            "React",
+            "TypeScript",
+            "Vite",
+            "Tailwind CSS"
+        ],
+        "results": {
+            "Focus": "EEG visualization",
+            "Interface": "React dashboard",
+            "Source": "Public repository"
+        },
+        "lessons": "A visual exploration project. The repository README currently provides development setup rather than a detailed evaluation of signal processing or performance.",
+        "links": {
+            "github": "https://github.com/sabin901/neural-muse-dashboard",
+            "demo": null
+        },
+        "image": null
+    },
+    "application-manager": {
+        "title": "Application Manager",
+        "category": "Student Productivity",
+        "problem": "Job searches become difficult to organize when application details are scattered.",
+        "context": "A desktop project for college students to track job applications.",
+        "approach": "A C#/.NET application organizes application information in a desktop interface. See the repository for implementation details.",
+        "technologies": [
+            "C#",
+            ".NET",
+            "Windows Forms"
+        ],
+        "results": {
+            "Purpose": "Organize job applications",
+            "Audience": "College students",
+            "Platform": "Desktop application"
+        },
+        "lessons": "The project focuses on making application records easier to manage. Public documentation does not establish measured productivity improvements.",
+        "links": {
+            "github": "https://github.com/sabin901/Application_Manager",
+            "demo": null
+        },
+        "image": null
+    },
+    "ayur": {
+        "title": "Ayur.me — Educational Wellness Platform",
+        "category": "Wellness & Interactive Learning",
+        "problem": "Wellness routines and educational information can be difficult to connect in one experience.",
+        "context": "A platform for habit tracking, a dosha assessment, educational content, and interactive exploration.",
+        "approach": "React and TypeScript power the interface, with Recharts visualizations and React Three Fiber for anatomy exploration. An Express/MongoDB backend supports authentication and saved profiles.",
+        "technologies": [
+            "React",
+            "TypeScript",
+            "Express",
+            "MongoDB",
+            "Recharts",
+            "React Three Fiber"
+        ],
+        "results": {
+            "Tracking": "Yoga, diet, meditation, and habit logs",
+            "Exploration": "Interactive anatomy and educational content",
+            "Assessment": "22-question weighted assessment",
+            "Demo": "Browser-local fallback when backend services are unavailable"
+        },
+        "lessons": "The project is for education and wellness exploration. It is not a clinically validated diagnostic tool or a substitute for medical advice.",
+        "links": {
+            "github": "https://github.com/sabin901/Ayur.me",
+            "demo": "https://ayurme.vercel.app/"
+        },
+        "image": null
+    },
+    "mac-service": {
+        "title": "Mac Computer Service",
+        "category": "Storefront & Booking Frontend",
+        "problem": "Customers need a clear way to explore device services, browse products, and start a repair booking.",
+        "context": "A website frontend for a Nepal-based Apple device repair and sales business.",
+        "approach": "Built with React, TypeScript, Vite, Tailwind CSS, and Framer Motion. Includes product browsing, device-specific repair flows, calendar selection, and booking forms.",
+        "technologies": [
+            "React",
+            "TypeScript",
+            "Vite",
+            "Tailwind CSS",
+            "Framer Motion"
+        ],
+        "results": {
+            "Storefront": "Product browsing and filters",
+            "Repairs": "Device and issue selection",
+            "Bookings": "Calendar and booking-form interface",
+            "Current scope": "Frontend; backend and payment integration are listed as future work"
+        },
+        "lessons": "The repository documents client-side/local storage. The portfolio does not claim completed payment processing or verified customer bookings.",
+        "links": {
+            "github": "https://github.com/sabin901/Mac-Computer-Service",
+            "demo": "https://www.maccomputerservice.com.np/"
+        },
+        "image": null
+    },
+    "weather-analyzer": {
+        "title": "Weather Analyzer",
+        "category": "Weather Data · Desktop",
+        "problem": "Weather observations are easier to review when they can be organized in a desktop interface.",
+        "context": "A C# Windows Forms project for working with weather data.",
+        "approach": "The repository contains a Visual Studio solution and Windows Forms source. Explore the code for the implemented analysis workflow.",
+        "technologies": [
+            "C#",
+            "Windows Forms",
+            "Data Analysis"
+        ],
+        "results": {
+            "Platform": "Windows desktop",
+            "Focus": "Weather data exploration",
+            "Source": "Public Visual Studio solution"
+        },
+        "lessons": "No independently measured forecasting accuracy is claimed. More project documentation would make the methods and examples easier to reproduce.",
+        "links": {
+            "github": "https://github.com/sabin901/Weather_Analyzer",
+            "demo": null
+        },
+        "image": null
+    },
+    "muse-s": {
+        "title": "Muse S Sensor Explorer",
+        "category": "Real-Time Sensor Visualization",
+        "problem": "Sensor streams need a clear display and a convenient way to record data for later analysis.",
+        "context": "A Python desktop application for streaming and visualizing Muse S EEG and motion sensor data.",
+        "approach": "Uses PyQt, pyqtgraph, Bleak, NumPy, and SciPy for the interface, Bluetooth connection, signal handling, plots, and CSV recording.",
+        "technologies": [
+            "Python",
+            "PyQt",
+            "pyqtgraph",
+            "Bleak",
+            "NumPy"
+        ],
+        "results": {
+            "Streams": "EEG and IMU sensor data",
+            "Recording": "CSV export",
+            "Visualization": "Live graphs and tables",
+            "Platforms": "macOS and Windows with documented differences"
+        },
+        "lessons": "Bluetooth behavior and sample rates vary by platform. The README explains setup, device connection, and platform-specific limitations.",
+        "links": {
+            "github": "https://github.com/sabin901/amused-py-main22",
+            "demo": null
+        },
+        "image": null
+    }
+};
 
     projectModalBtns.forEach(btn => {
+        btn.setAttribute('aria-haspopup', 'dialog');
+        if (!btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', `Read ${btn.closest('.project-card').querySelector('h3').textContent.trim()} case study`);
         btn.addEventListener('click', () => {
             const projectId = btn.getAttribute('data-project');
             const project = projectData[projectId];
             
             if (project && modalBody && modalOverlay) {
                 modalBody.innerHTML = `
+                    ${project.image ? `<img src="${project.image}" alt="${project.title} preview" class="modal-preview">` : ''}
                     <div class="mb-8 pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.3);">
                     <div class="mb-6">
-                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">${project.category}</span>
-                            <h2 class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: #F8FAFC;">${project.title}</h2>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">${project.category}</span>
+                            <h2 id="project-modal-title" class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: var(--text-primary);">${project.title}</h2>
                         </div>
                         
                         <div class="space-y-6">
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
-                                    <span style="color: #6EE7B7;">●</span>
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
+                                    <span style="color: var(--accent-mint);">●</span>
                                     Problem
                                 </h3>
-                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.problem}</p>
+                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.problem}</p>
                             </div>
                             
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
-                                    <span style="color: #6EE7B7;">●</span>
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
+                                    <span style="color: var(--accent-mint);">●</span>
                                     Context
                                 </h3>
-                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.context}</p>
+                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.context}</p>
                         </div>
                         
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: #6EE7B7; background: rgba(110, 231, 183, 0.05);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
-                                    <span style="color: #6EE7B7;">●</span>
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
+                                    <span style="color: var(--accent-mint);">●</span>
                                     Approach
                                 </h3>
-                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.approach}</p>
+                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.approach}</p>
                         </div>
                         
                         <div>
-                                <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Technologies</h3>
+                                <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Technologies</h3>
                         <div class="flex flex-wrap gap-2">
                             ${project.technologies.map(tech => 
-                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: rgba(110, 231, 183, 0.1); border-color: rgba(110, 231, 183, 0.3); color: #6EE7B7;">${tech}</span>`
+                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: rgba(110, 231, 183, 0.1); border-color: rgba(110, 231, 183, 0.3); color: var(--accent-mint);">${tech}</span>`
                             ).join('')}
                         </div>
                     </div>
                     
                         <div>
-                                <h3 class="text-lg font-bold mb-3" style="color: #F8FAFC;">Results</h3>
+                                <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Features & Current Scope</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 ${Object.entries(project.results).map(([key, value]) => `
                                         <div class="p-4 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
-                                            <div class="text-xs font-medium mb-1" style="color: #94A3B8;">${key}</div>
-                                            <div class="text-lg font-bold" style="color: #6EE7B7;">${value}</div>
+                                            <div class="text-xs font-medium mb-1" style="color: var(--text-secondary);">${key}</div>
+                                            <div class="text-lg font-bold" style="color: var(--accent-mint);">${value}</div>
                                     </div>
                                 `).join('')}
                             </div>
                     </div>
                     
                             <div class="p-4 rounded-lg border" style="border-color: rgba(110, 231, 183, 0.2); background: rgba(110, 231, 183, 0.05);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: #F8FAFC;">
-                                    <span style="color: #6EE7B7;">●</span>
-                                    Lessons & Next Steps
+                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
+                                    <span style="color: var(--accent-mint);">●</span>
+                                    Engineering Notes
                                 </h3>
-                                <p class="text-sm leading-relaxed" style="color: #94A3B8;">${project.lessons}</p>
+                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.lessons}</p>
                                 </div>
                         
                             <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: rgba(110, 231, 183, 0.2);">
@@ -355,9 +505,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </div>
                 `;
                 
-                modalOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                history.pushState({ modal: 'project' }, '', window.location.href);
+                openDialog(modalOverlay, btn);
             }
         });
     });
@@ -391,17 +539,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Browser back button closes modal
+    // Closing with browser Back restores the trigger and background access.
     window.addEventListener('popstate', () => {
-        if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
-            modalOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-        const articleModalOverlayRef = document.getElementById('article-modal-overlay');
-        if (articleModalOverlayRef && !articleModalOverlayRef.classList.contains('hidden')) {
-            articleModalOverlayRef.classList.add('hidden');
-            document.body.style.overflow = '';
-        }
+        waitingForHistory = false;
+        if (activeDialog) closeDialog(false);
     });
 
     // ===== NAVBAR SCROLL EFFECT =====
@@ -421,7 +562,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (scrollProgress) {
         window.addEventListener('scroll', () => {
             const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (window.scrollY / windowHeight) * 100;
+            const scrolled = windowHeight > 0 ? Math.min(100, Math.max(0, window.scrollY / windowHeight * 100)) : 0;
             scrollProgress.style.width = scrolled + '%';
         });
     }
@@ -432,7 +573,7 @@ document.addEventListener("DOMContentLoaded", () => {
         rootMargin: '0px 0px -100px 0px'
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
@@ -442,11 +583,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, observerOptions) : null;
 
     // Observe animated elements
     document.querySelectorAll('.project-card, section > div > div').forEach((el, index) => {
-        if (!el.classList.contains('text-center') && !el.classList.contains('article-card')) {
+        if (observer && !reducedMotion.matches && !el.classList.contains('text-center') && !el.classList.contains('article-card') && !el.querySelector('.project-card, [role="dialog"]')) {
         el.style.opacity = '0';
             el.style.transform = 'translateY(30px) scale(0.95)';
             el.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)`;
@@ -468,8 +609,8 @@ document.addEventListener("DOMContentLoaded", () => {
             content: `
                 <div class="space-y-6">
                     <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Technical Guide</span>
-                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published ${new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Technical Guide</span>
+                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published January 2025</p>
                     </div>
                     
                     <div class="prose prose-lg max-w-none dark:prose-invert">
@@ -522,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
             content: `
                 <div class="space-y-6">
                     <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Data Science</span>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Data Science</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published December 2024</p>
                     </div>
                     
@@ -577,7 +718,7 @@ document.addEventListener("DOMContentLoaded", () => {
             content: `
                 <div class="space-y-6">
                     <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: #6EE7B7;">Financial Analysis</span>
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Financial Analysis</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published November 2024</p>
                     </div>
                     
@@ -647,6 +788,10 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     articleCards.forEach(card => {
+        card.setAttribute('aria-label', `Read ${card.querySelector('h3').textContent}`);
+        card.addEventListener('keydown', event => {
+            if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }
+        });
         card.addEventListener('click', () => {
             const articleId = card.getAttribute('data-article');
             const article = articlesData[articleId];
@@ -654,28 +799,18 @@ document.addEventListener("DOMContentLoaded", () => {
             if (article && articleModalBody && articleModalOverlay) {
                 articleModalBody.innerHTML = `
                     <div class="mb-6">
-                        <h2 class="text-2xl md:text-3xl font-bold mb-4 article-modal-title">${article.title}</h2>
+                        <h2 id="article-modal-title" class="text-2xl md:text-3xl font-bold mb-4 article-modal-title">${article.title}</h2>
                     </div>
                     ${article.content}
                 `;
                 
-                articleModalOverlay.classList.remove('hidden');
-                document.body.style.overflow = 'hidden';
-                history.pushState({ modal: 'article' }, '', window.location.href);
+                openDialog(articleModalOverlay, card);
             }
         });
     });
 
     // Close article modal - event delegation (close button + overlay click)
-    function closeArticleModal() {
-        if (articleModalOverlay && !articleModalOverlay.classList.contains('hidden')) {
-            articleModalOverlay.classList.add('hidden');
-            document.body.style.overflow = '';
-            if (history.state?.modal === 'article') {
-                history.back();
-            }
-        }
-    }
+    function closeArticleModal() { closeDialog(); }
 
     if (articleModalOverlay) {
         const articleModalContent = articleModalOverlay.querySelector('.modal-content');
@@ -702,6 +837,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Single Escape key handler for all modals
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
+        if (!mobileMenu.classList.contains('hidden')) closeMobileMenu(true);
         if (modalOverlay && !modalOverlay.classList.contains('hidden')) {
             closeProjectModal();
             return;

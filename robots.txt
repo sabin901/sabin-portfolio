@@ -1,8 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap
-Sitemap: https://sabin-raut.vercel.app/sitemap.xml
-
-# Disallow admin or private areas if any
-# Disallow: /admin/
+Sitemap: https://sabin901.github.io/sabin-portfolio/sitemap.xml
