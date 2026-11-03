@@ -75,6 +75,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // The full collection is optional; the main page leads with three highlights.
+    const projectArchive = document.getElementById('project-archive');
+    const archiveCollapse = document.getElementById('archive-collapse');
+    archiveCollapse.hidden = false;
+    archiveCollapse.addEventListener('click', () => {
+        projectArchive.open = false;
+        projectArchive.querySelector('summary').focus({ preventScroll: true });
+        projectArchive.scrollIntoView({ behavior: scrollBehavior(), block: 'start' });
+    });
+
     // ===== PROJECT FILTERING =====
     const filterButtons = document.querySelectorAll(".project-filter-btn");
     const workSection = document.getElementById("work");

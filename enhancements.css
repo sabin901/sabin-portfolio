@@ -258,3 +258,91 @@ button:focus-visible,
     transform: none !important;
   }
 }
+
+/* A few visual highlights lead; the complete collection opens on demand. */
+.hero-intro {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.hero-portrait {
+  display: block;
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  overflow: hidden;
+  border: 2px solid var(--accent-mint);
+  border-radius: 50%;
+  box-shadow: 0 0 24px var(--accent-soft);
+}
+.hero-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(2.25);
+  transform-origin: 50% 65%;
+}
+#featured-projects { padding-bottom: 2rem; }
+#work { padding-top: 2rem; }
+#work > div > .text-center { margin-bottom: 2rem; }
+.project-archive {
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--accent-soft);
+  scroll-margin-top: 100px;
+}
+.archive-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px;
+  cursor: pointer;
+  list-style: none;
+  color: var(--text-primary);
+}
+.archive-summary::-webkit-details-marker { display: none; }
+.archive-summary:focus-visible {
+  outline: 2px solid var(--accent-mint);
+  outline-offset: 5px;
+  border-radius: 12px;
+}
+.archive-summary:hover { background: var(--accent-soft); }
+.archive-summary-copy { display: flex; align-items: center; gap: 18px; }
+.archive-summary-copy > svg { flex-shrink: 0; color: var(--accent-mint); }
+.archive-summary strong { display: block; font-size: 1.1rem; }
+.archive-summary small { display: block; margin-top: 4px; color: var(--text-secondary); }
+.archive-chevron { flex-shrink: 0; color: var(--accent-mint); transition: transform 0.2s; }
+.project-archive[open] .archive-chevron { transform: rotate(180deg); }
+.archive-body { padding: 32px; border-top: 1px solid var(--border-subtle); }
+.archive-thumbnail { max-height: 160px; }
+.archive-footer { display: flex; justify-content: center; margin-top: 32px; }
+@media (max-width: 640px) {
+  .archive-summary { padding: 22px 20px; gap: 12px; }
+  .archive-summary-copy { gap: 12px; }
+  .archive-body { padding: 24px 12px; }
+}
+
+.project-preview-btn {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 22px;
+  cursor: pointer;
+  text-align: left;
+}
+.project-preview-btn .project-thumbnail { margin-bottom: 0; }
+.project-preview-mark {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  padding: 5px 9px;
+  border-radius: 4px;
+  color: #f8fafc;
+  background: rgba(10, 26, 47, 0.92);
+  font-size: 11px;
+  line-height: 1.4;
+}

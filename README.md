@@ -2,7 +2,7 @@
 
 [View the portfolio](https://sabin901.github.io/sabin-portfolio/) · [GitHub profile](https://github.com/sabin901)
 
-The original navy-and-mint one-page portfolio, enhanced with optional light mode, recent projects, real screenshots, and accessible interactions. Dark mode remains the default; a visitor’s explicit theme choice is saved locally.
+The original navy-and-mint one-page portfolio, enhanced with optional light mode, three visual project highlights, an expandable full project archive, and accessible interactions. Dark mode remains the default; a visitor’s explicit theme choice is saved locally.
 
 ## Run locally
 
@@ -35,7 +35,7 @@ node --check theme.js
 python3 scripts/check_site.py
 ```
 
-Check desktop and mobile views, rapid filter changes, both themes, menu navigation, keyboard activation of writing cards, and modal Tab/Escape/Back behavior. Main content and direct project/résumé links remain available without JavaScript; popups, filters, and theme controls require JavaScript. Google Fonts use system font fallbacks.
+Check desktop and mobile views, opening/closing the project archive, rapid filter changes, both themes, menu navigation, keyboard activation of screenshots and writing cards, and modal Tab/Escape/Back behavior. Main content and direct project/résumé links remain available without JavaScript; popups, filters, and theme controls require JavaScript. Google Fonts use system font fallbacks.
 
 ## Publish
 
