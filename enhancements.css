@@ -266,22 +266,17 @@ button:focus-visible,
   gap: 16px;
   margin-bottom: 24px;
 }
-.hero-portrait {
-  display: block;
-  width: 64px;
-  height: 64px;
-  flex: 0 0 64px;
-  overflow: hidden;
-  border: 2px solid var(--accent-mint);
-  border-radius: 50%;
-  box-shadow: 0 0 24px var(--accent-soft);
+.hero-code-mark {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--accent-mint);
 }
-.hero-portrait img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transform: scale(2.25);
-  transform-origin: 50% 65%;
+.hero-code-mark::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-mint), transparent);
 }
 #featured-projects { padding-bottom: 2rem; }
 #work { padding-top: 2rem; }
@@ -345,4 +340,60 @@ button:focus-visible,
   background: rgba(10, 26, 47, 0.92);
   font-size: 11px;
   line-height: 1.4;
+}
+
+/* A quiet technical accent keeps the introduction open and readable. */
+#home { isolation: isolate; overflow: hidden; }
+#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 80% 32%, rgba(94, 234, 212, 0.075), transparent 55%);
+}
+#home::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: -6%;
+  width: 46%;
+  height: 65%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.2;
+  background-image: linear-gradient(var(--border-subtle) 1px, transparent 1px), linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, #000, transparent 70%);
+  transform: perspective(700px) rotateY(-15deg) rotateZ(-8deg);
+}
+#home h1 { letter-spacing: -0.045em; }
+#home h2 { letter-spacing: -0.035em; line-height: 1.14; text-wrap: balance; }
+#home h2::after { display: none; }
+.hero-highlight { color: var(--accent-mint); }
+.hero-word { white-space: nowrap; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.hero-cta-btn svg { transition: transform 0.2s; }
+.hero-cta-btn:hover svg { transform: translateX(3px); }
+.hero-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.hero-contact-link:hover { color: var(--accent-mint); }
+#featured-projects .project-card { display: flex; flex-direction: column; }
+#featured-projects .project-actions { margin-top: auto; }
+@media (max-width: 640px) {
+  #home { min-height: 100svh; padding-block: 96px 56px; }
+  #home > div { padding-block: 32px; }
+  #home::after { width: 80%; opacity: 0.12; }
+  .hero-actions { gap: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-cta-btn:hover svg { transform: none; }
 }

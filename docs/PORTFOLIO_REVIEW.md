@@ -8,7 +8,7 @@ The [portfolio repository](https://github.com/sabin901/sabin-portfolio), [GitHub
 
 - The public Pages site serves the root `index.html`, `styles.css`, and `script.js`. The React experiment is separate and was left intact.
 - The previous featured projects did not reflect the newest substantial work. Footlyzer and Pawi now lead alongside iRoutine.
-- Preserved the original dark one-page layout, typography, section order, hover effects, scroll reveals, filters, and case-study/article modals. Added an optional light theme, a small introduction portrait, real clickable screenshots, concise project summaries, and new projects within the existing cards. Three projects lead the main page; the full set of twelve sits in a native expandable archive with the existing filters and case studies.
+- Preserved the original dark one-page layout, typography, section order, hover effects, scroll reveals, filters, and case-study/article modals. Added an optional light theme, a code-inspired introduction accent and subtle background detail, real clickable screenshots, concise project summaries, and new projects within the existing cards. Three projects lead the main page; the full set of twelve sits in a native expandable archive with the existing filters and case studies.
 - Kept the existing portrait, contact email, education, and experience information. No résumé PDFs were edited. The résumé still resolves to `images/Sabin_Raut_Resume.pdf`.
 - Matched the LinkedIn destination to the link on the GitHub profile: `https://www.linkedin.com/in/sabin-raut-`.
 - Corrected canonical, Open Graph, and sitemap URLs to the public GitHub Pages address instead of the older Vercel address.
@@ -70,3 +70,5 @@ Project screenshots were captured on November 3, 2026 from the user's public web
 - All ten project case studies and three writing popups open. Modal focus trapping, Escape, browser Back, background inert state, and return to the triggering control were verified.
 - All loaded image assets were checked. The résumé PDF and original `styles.css` match the original repository bytes; the separate React source is unchanged.
 - Reduced-motion behavior was checked in source. Full assistive-technology and cross-browser testing was not performed.
+
+The introduction was further refined with a code accent in place of the circular photo, mint headline emphasis, a soft background glow and grid, shorter copy, a direct contact action, and compact mobile spacing. Featured-card actions align at the bottom of each card.
