@@ -58,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const href = this.getAttribute("href");
             if (href === "#" || href === "#home") {
             e.preventDefault();
+                if (window.location.hash !== '#home') history.pushState(null, '', '#home');
                 window.scrollTo({ top: 0, behavior: scrollBehavior() });
                 return;
             }
@@ -65,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
+                if (window.location.hash !== href) history.pushState(null, '', href);
                 const offset = 80;
                 const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - offset;
                 window.scrollTo({ top: targetPosition, behavior: scrollBehavior() });
