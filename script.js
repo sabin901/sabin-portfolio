@@ -430,27 +430,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 };
 
-    // Visitors can explore three real project previews without leaving the hero.
-    const heroPreview = document.getElementById('hero-project-preview');
-    const heroChoices = [...document.querySelectorAll('[data-hero-project]')];
-    const heroLabels = {
-        pawi: ['Pawi', 'A virtual companion for your desktop'],
-        footlyzer: ['Footlyzer', 'Football analytics, with context'],
-        iroutine: ['iRoutine', 'A workspace for personal analytics']
-    };
-    heroChoices.forEach((choice, index) => choice.addEventListener('click', () => {
-        const id = choice.dataset.heroProject;
-        const project = projectData[id];
-        const [name, description] = heroLabels[id];
-        heroChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
-        heroPreview.dataset.project = id;
-        heroPreview.setAttribute('aria-label', `Explore ${name} case study`);
-        const previewImage = document.getElementById('hero-project-image');
-        previewImage.src = project.image;
-        previewImage.alt = `${name} public website preview`;
-        document.getElementById('hero-project-name').textContent = name;
-        document.getElementById('hero-project-description').textContent = description;
-        document.getElementById('hero-project-count').textContent = `0${index + 1} / 03`;
+    // The opening explains the process; Featured Projects presents the work.
+    const processSteps = [
+        ['Start with the right problem', 'Clarify who it helps, what it needs to do, and what a useful outcome looks like.'],
+        ['Connect the pieces', 'Bring the interface, services, and data together into one useful workflow.'],
+        ['Check the details', 'Try normal and edge-case paths, verify the data, and check keyboard and mobile use.'],
+        ['Improve through feedback', 'Use feedback to simplify the flow and improve clarity, performance, and presentation.']
+    ];
+    const processChoices = [...document.querySelectorAll('[data-process-step]')];
+    const processPanels = [...document.querySelectorAll('[data-process-panel]')];
+    document.querySelector('.process-picker').hidden = false;
+    processChoices.forEach(choice => choice.addEventListener('click', () => {
+        const index = Number(choice.dataset.processStep);
+        processChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
+        processPanels.forEach((panel, panelIndex) => { panel.hidden = panelIndex !== index; });
+        document.getElementById('hero-process-title').textContent = processSteps[index][0];
+        document.getElementById('hero-process-description').textContent = processSteps[index][1];
+        document.getElementById('hero-process-count').textContent = `0${index + 1} / 04`;
     }));
 
     projectModalBtns.forEach(btn => {

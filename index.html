@@ -54,11 +54,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Precompiled utilities preserve the existing Tailwind layout. -->
-    <link rel="stylesheet" href="utilities.css?v=20261104-visual">
+    <link rel="stylesheet" href="utilities.css?v=20261104-process">
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="enhancements.css?v=20261104-visual">
+    <link rel="stylesheet" href="enhancements.css?v=20261104-process">
     <noscript><style>#loading-screen {display:none!important}</style></noscript>
 </head>
 <body class="text-black font-sans antialiased">
@@ -156,21 +156,25 @@
                     </div>
                 </div>
             </div>
-            <div class="hero-showcase">
-                <div class="hero-showcase-heading"><span>A few things I’ve built</span><span id="hero-project-count" aria-hidden="true">01 / 03</span></div>
+            <div class="hero-showcase process-showcase">
+                <div class="hero-showcase-heading"><span>From idea to working software</span><span id="hero-process-count" aria-hidden="true">01 / 04</span></div>
                 <div class="hero-project-frame">
-                    <div class="hero-window-bar" aria-hidden="true"><span class="hero-window-dots"><i></i><i></i><i></i></span><span>Selected work</span><span>↗</span></div>
-                    <button type="button" id="hero-project-preview" class="hero-project-open project-modal-btn" data-project="pawi" aria-label="Explore Pawi case study">
-                        <img id="hero-project-image" src="images/projects/pawi.webp" alt="Pawi public website preview" width="1280" height="720" fetchpriority="high">
-                        <span class="hero-project-caption"><span><strong id="hero-project-name" aria-live="polite">Pawi</strong><span id="hero-project-description">A virtual companion for your desktop</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span>
-                    </button>
+                    <div class="hero-window-bar" aria-hidden="true"><span class="hero-window-dots"><i></i><i></i><i></i></span><span>Behind the build</span><span>&lt;/&gt;</span></div>
+                    <div id="hero-process-detail" class="hero-process-detail">
+                        <div class="process-visual" data-process-panel="0" aria-hidden="true"><svg viewBox="0 0 400 230" fill="none"><rect x="36" y="35" width="170" height="160" rx="12" class="flow-panel"/><rect x="57" y="57" width="34" height="34" rx="8" class="flow-soft"/><path d="M68 68h12m-6-6v12" class="flow-accent"/><text x="57" y="118" class="flow-label">A clear problem</text><path d="M57 136h126m-126 15h100m-100 15h113" class="flow-rule"/><path d="M222 115h40m-8-8 8 8-8 8" class="flow-accent"/><circle cx="317" cy="115" r="47" class="flow-panel"/><circle cx="317" cy="115" r="27" class="flow-accent"/><circle cx="317" cy="115" r="9" class="flow-solid"/><text x="283" y="187" class="flow-small">USEFUL OUTCOME</text></svg></div>
+                        <div class="process-visual" data-process-panel="1" aria-hidden="true" hidden><svg viewBox="0 0 400 230" fill="none"><rect x="28" y="44" width="207" height="144" rx="10" class="flow-panel"/><path d="M28 68h207" class="flow-rule"/><circle cx="42" cy="56" r="2" class="flow-solid"/><circle cx="51" cy="56" r="2" class="flow-solid" opacity=".4"/><rect x="43" y="84" width="176" height="36" rx="5" class="flow-soft"/><rect x="43" y="133" width="50" height="37" rx="5" class="flow-soft"/><rect x="105" y="133" width="50" height="37" rx="5" class="flow-soft"/><rect x="168" y="133" width="50" height="37" rx="5" class="flow-soft"/><path d="M235 96h30V67h21m-51 79h30v22h21" class="flow-accent"/><rect x="286" y="42" width="87" height="50" rx="9" class="flow-panel"/><text x="329" y="72" text-anchor="middle" class="flow-label">Services</text><rect x="286" y="143" width="87" height="50" rx="9" class="flow-panel"/><text x="329" y="173" text-anchor="middle" class="flow-label">Data</text><text x="89" y="211" class="flow-small">ONE CONNECTED EXPERIENCE</text></svg></div>
+                        <div class="process-visual" data-process-panel="2" aria-hidden="true" hidden><svg viewBox="0 0 400 230" fill="none"><rect x="52" y="28" width="296" height="174" rx="12" class="flow-panel"/><text x="77" y="61" class="flow-label">Look beyond the happy path</text><path d="M77 77h247" class="flow-rule"/><text x="77" y="103" class="flow-note">Behavior &amp; edge cases</text><text x="77" y="140" class="flow-note">Data &amp; expected results</text><text x="77" y="177" class="flow-note">Keyboard &amp; mobile use</text><circle cx="310" cy="99" r="11" class="flow-soft"/><circle cx="310" cy="136" r="11" class="flow-soft"/><circle cx="310" cy="173" r="11" class="flow-soft"/><path d="m305 99 4 4 7-8m-11 41 4 4 7-8m-11 41 4 4 7-8" class="flow-accent"/></svg></div>
+                        <div class="process-visual" data-process-panel="3" aria-hidden="true" hidden><svg viewBox="0 0 400 230" fill="none"><text x="36" y="35" class="flow-small">FIRST PASS</text><rect x="29" y="48" width="145" height="139" rx="10" class="flow-panel"/><path d="M43 68h117m-117 17h117m-117 17h52m13 0h52m-117 17h117m-117 17h117m-117 17h52m13 0h52m-117 17h117" class="flow-rule"/><path d="M188 117h26m-7-7 7 7-7 7" class="flow-accent"/><text x="236" y="35" class="flow-small">REFINED</text><rect x="228" y="48" width="145" height="139" rx="10" class="flow-panel"/><rect x="242" y="63" width="117" height="47" rx="6" class="flow-soft"/><path d="M242 126h93m-93 13h78" class="flow-rule"/><rect x="242" y="154" width="54" height="17" rx="4" class="flow-solid"/><text x="108" y="215" class="flow-small">FEEDBACK → A CLEARER EXPERIENCE</text></svg></div>
+                        <div class="process-caption" aria-live="polite"><h3 id="hero-process-title">Start with the right problem</h3><p id="hero-process-description">Clarify who it helps, what it needs to do, and what a useful outcome looks like.</p></div>
+                    </div>
                 </div>
-                <div class="hero-project-picker" role="group" aria-label="Choose a project preview">
-                    <button type="button" data-hero-project="pawi" aria-pressed="true" aria-controls="hero-project-preview">Pawi</button>
-                    <button type="button" data-hero-project="footlyzer" aria-pressed="false" aria-controls="hero-project-preview">Footlyzer</button>
-                    <button type="button" data-hero-project="iroutine" aria-pressed="false" aria-controls="hero-project-preview">iRoutine</button>
+                <div class="process-picker" role="group" aria-label="Explore the development process" hidden>
+                    <button type="button" data-process-step="0" aria-pressed="true" aria-controls="hero-process-detail"><span>01</span>Define</button>
+                    <button type="button" data-process-step="1" aria-pressed="false" aria-controls="hero-process-detail"><span>02</span>Build</button>
+                    <button type="button" data-process-step="2" aria-pressed="false" aria-controls="hero-process-detail"><span>03</span>Check</button>
+                    <button type="button" data-process-step="3" aria-pressed="false" aria-controls="hero-process-detail"><span>04</span>Refine</button>
                 </div>
-                <p class="hero-showcase-note">Real projects. Open a preview to explore the build.</p>
+                <p class="hero-showcase-note">Explore the process. See the finished work below.</p>
             </div>
         </div>
     </section>
@@ -500,7 +504,7 @@
     <section id="skills" class="py-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <p class="section-eyebrow">How I work</p>
+                <p class="section-eyebrow">Tools &amp; disciplines</p>
                 <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Skills & Expertise</h2>
                 <p class="text-lg text-gray-400 max-w-2xl mx-auto">Building software, understanding data, and connecting the results to business decisions.</p>
             </div>
@@ -774,6 +778,6 @@
     </script>
 
     <!-- Scripts -->
-    <script src="script.js?v=20261104-final-review"></script>
+    <script src="script.js?v=20261104-process"></script>
 </body>
 </html>

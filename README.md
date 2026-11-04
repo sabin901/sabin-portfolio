@@ -2,7 +2,7 @@
 
 [View the portfolio](https://sabin901.github.io/sabin-portfolio/) · [GitHub profile](https://github.com/sabin901)
 
-The original navy-and-mint one-page portfolio, enhanced with optional light mode, an interactive homepage project preview, three visual project highlights, an expandable full project archive, and accessible interactions. Dark mode remains the default; a visitor’s explicit theme choice is saved locally.
+The original navy-and-mint one-page portfolio, enhanced with optional light mode, an interactive homepage process illustration, three visual project highlights, an expandable full project archive, and accessible interactions. Dark mode remains the default; a visitor’s explicit theme choice is saved locally.
 
 ## Run locally
 
@@ -15,7 +15,7 @@ Open http://127.0.0.1:8917. Use another port if it is occupied. The committed st
 ## Update content
 
 - `index.html`: introduction, project cards, skills, experience, biography, and contact links.
-- `script.js`: case studies, writing content, filters, navigation, modal behavior, theme controls, and article reading-time estimates. Bump its `?v=` value in `index.html` when changing it.
+- `script.js`: case studies, writing content, filters, navigation, modal behavior, theme controls, homepage process controls, and article reading-time estimates. Bump its `?v=` value in `index.html` when changing it.
 - `styles.css`: preserved original styling.
 - `enhancements.css`: light mode, accessibility, and responsive refinements. Bump its `?v=` value in `index.html` when changing it so browsers load the new styles.
 - `theme.js`: applies the saved theme before the first paint.
@@ -35,7 +35,7 @@ node --check theme.js
 python3 scripts/check_site.py
 ```
 
-Check desktop and mobile views, each homepage preview and its case-study link, opening/closing the project archive, rapid filter changes, both themes, menu navigation, keyboard activation of screenshots and writing cards, and modal Tab/Escape/Back behavior. Main content and direct project/résumé links remain available without JavaScript; popups, filters, and theme controls require JavaScript. Google Fonts use system font fallbacks.
+Check desktop and mobile views, each homepage process step, opening/closing the project archive, rapid filter changes, both themes, menu navigation, keyboard activation of screenshots and writing cards, and modal Tab/Escape/Back behavior. Main content and direct project/résumé links remain available without JavaScript; popups, filters, and theme controls require JavaScript. Google Fonts use system font fallbacks.
 
 ## Publish
 

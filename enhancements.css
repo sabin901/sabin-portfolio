@@ -518,7 +518,7 @@ button:focus-visible,
   .capability-link:hover span, .writing-card:hover .writing-cover svg, .writing-card:hover .writing-arrow { transform: none; }
 }
 
-/* The introduction is a small gallery of real work, with a layered canvas. */
+/* The opening visual explains the process; project screenshots stay below. */
 :root {
   --showcase-surface: #132331;
   --showcase-raised: #1b2c39;
@@ -559,23 +559,30 @@ button:focus-visible,
   z-index: -1;
 }
 .hero-showcase-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 16px; color: var(--text-secondary); font-size: 11px; letter-spacing: 0.04em; }
-#hero-project-count { font-family: monospace; color: var(--accent-mint); }
+#hero-process-count { font-family: monospace; color: var(--accent-mint); }
 .hero-project-frame { border: 1px solid var(--border-subtle); border-radius: 14px; background: var(--showcase-surface); box-shadow: var(--showcase-shadow); overflow: hidden; }
 .hero-window-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 16px; border-bottom: 1px solid var(--border-subtle); color: var(--text-muted); font-size: 10px; }
 .hero-window-dots { display: flex; gap: 5px; }
 .hero-window-dots i { display: block; width: 5px; height: 5px; border-radius: 50%; background: var(--text-muted); opacity: 0.5; }
-.hero-project-open { display: block; width: 100%; text-align: left; }
-.hero-project-open > img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--border-subtle); }
-.hero-project-caption { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px; }
-.hero-project-caption strong { display: block; margin-bottom: 3px; font-size: 21px; font-weight: 600; letter-spacing: -0.025em; color: var(--text-primary); }
-#hero-project-description { display: block; font-size: 12px; color: var(--text-secondary); }
-.hero-project-arrow { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 36px; height: 36px; border: 1px solid var(--accent-border); border-radius: 50%; color: var(--accent-mint); transition: transform 0.2s, background 0.2s; }
-.hero-project-open:hover .hero-project-arrow { transform: translate(2px, -2px); background: var(--accent-soft); }
-.hero-project-open:focus-visible { outline-offset: -4px; border-radius: 0 0 14px 14px; }
-.hero-project-picker { display: flex; gap: 8px; margin-top: 22px; }
-.hero-project-picker button { flex: 1; min-width: 0; min-height: 40px; padding: 8px 12px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--showcase-surface); color: var(--text-secondary); font-size: 12px; transition: border-color 0.2s, background 0.2s; }
-.hero-project-picker button:hover { border-color: var(--accent-mint); }
-.hero-project-picker button[aria-pressed="true"] { color: var(--accent-mint); border-color: var(--accent-mint); background: var(--accent-soft); }
+.hero-process-detail { padding: 0 22px 24px; }
+.process-visual { padding: 14px 0 4px; }
+.process-visual svg { display: block; width: 100%; aspect-ratio: 400 / 230; }
+.flow-panel { fill: var(--showcase-raised); stroke: var(--border-subtle); }
+.flow-soft { fill: var(--accent-soft); }
+.flow-solid { fill: var(--accent-mint); }
+.flow-accent { fill: none; stroke: var(--accent-mint); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.flow-rule { fill: none; stroke: var(--text-muted); stroke-opacity: 0.35; stroke-width: 1.2; stroke-linecap: round; }
+.flow-label { fill: var(--text-primary); font: 500 12px Inter, sans-serif; }
+.flow-note { fill: var(--text-secondary); font: 12px Inter, sans-serif; }
+.flow-small { fill: var(--text-muted); font: 8px monospace; letter-spacing: 0.6px; }
+.process-caption { min-height: 106px; padding-top: 18px; border-top: 1px solid var(--border-subtle); }
+.process-caption h3 { margin-bottom: 9px; font-size: 20px; font-weight: 600; letter-spacing: -0.025em; line-height: 1.3; color: var(--text-primary); }
+.process-caption p { font-size: 13px; line-height: 1.8; color: var(--text-secondary); }
+.process-picker { display: flex; gap: 8px; margin-top: 22px; }
+.process-picker button { flex: 1; min-width: 0; min-height: 52px; padding: 8px 10px; border: 1px solid var(--border-subtle); border-radius: 6px; background: var(--showcase-surface); color: var(--text-secondary); font-size: 12px; transition: border-color 0.2s, background 0.2s; }
+.process-picker button span { display: block; margin-bottom: 2px; color: var(--text-muted); font-size: 9px; font-family: monospace; }
+.process-picker button:hover { border-color: var(--accent-mint); }
+.process-picker button[aria-pressed="true"] { color: var(--accent-mint); border-color: var(--accent-mint); background: var(--accent-soft); }
 .hero-showcase-note { margin-top: 14px; color: var(--text-muted); font-size: 11px; }
 /* Project case studies use the same surfaces, hierarchy, and accents. */
 #modal-overlay .modal-content { max-width: 1000px; background: var(--showcase-surface) !important; }
@@ -622,10 +629,11 @@ button:focus-visible,
   #home h2 { font-size: 32px; }
   #home .hero-layout > div:first-child > p { font-size: 16px; line-height: 1.75; margin-bottom: 28px; }
   .hero-intro { margin-bottom: 20px; }
-  .hero-project-caption { padding: 18px; }
   .hero-showcase::before { inset-inline: 12px -8px; transform: rotate(3deg); }
   .hero-showcase-heading { font-size: 10px; }
-  .hero-project-picker button { font-size: 11px; padding-inline: 8px; }
+  .process-picker button { font-size: 11px; padding-inline: 7px; }
+  .hero-process-detail { padding: 0 16px 20px; }
+  .process-caption h3 { font-size: 18px; }
   .case-intro.has-preview, .case-overview-grid { grid-template-columns: 1fr; gap: 24px; }
   .case-heading h2 { font-size: 26px; }
   #modal-overlay .modal-body { padding: 22px 18px; }
@@ -635,7 +643,4 @@ button:focus-visible,
 @media (max-width: 359px) {
   #home h1 { font-size: 40px; }
   #home h2 { font-size: 29px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .hero-project-open:hover .hero-project-arrow { transform: none; }
 }

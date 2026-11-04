@@ -63,7 +63,7 @@ Project screenshots were captured on November 3, 2026 from the user's public web
 
 ## Validation
 
-- Static check: 106 asset/link references, 31 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
+- Static check: 105 asset/link references, 30 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
 - JavaScript syntax and CSS compilation pass. Utilities are committed as a 14 KB stylesheet.
 - Browser checks: dark/light theme switching and saved preference; 320, 390, 768, 1024, and 1440 px layouts without horizontal overflow; mobile menu state and section focus; category filters and rapid filter changes.
 - The archive starts collapsed, opens by keyboard or pointer, and closes from its footer with focus returned to the summary. All featured screenshots open their case study. The archive and its filters were checked on mobile in light mode.
@@ -83,11 +83,11 @@ Validation for this refinement: new capability links open their project case stu
 
 ## Visual homepage and case-study refinement — November 4, 2026
 
-The introduction now combines the existing biography with an interactive preview of Pawi, Footlyzer, and iRoutine. Preview selectors update the image, caption, accessible state, and case-study action. All images are the existing captures of the real public projects. Warm sage/cream layers distinguish light mode; dark mode retains the navy/mint identity with a richer layered background.
+The introduction uses an interactive, original process illustration with Define, Build, Check, and Refine steps. Each selection updates the diagram, explanation, count, and accessible button state. Actual project screenshots appear in Featured Projects and the optional archive, avoiding a second gallery of the same work in the introduction. Warm sage/cream layers distinguish light mode; dark mode retains the navy/mint identity with a richer layered background.
 
 Project modals now share the homepage's panel surfaces and accents. The introduction and preview sit side by side on larger screens, followed by purpose and approach, separate technology chips, a feature grid, and engineering notes. Live/source links are near the top. Project claims and current-scope qualifications are preserved.
 
-All ten case studies and all three preview selections were checked in the browser. Hero layouts were checked at 320, 390, 768, 1024, and 1440 px, and the mobile modal was checked for internal overflow. Keyboard opening, Escape/Back dismissal, focus restoration, and theme changes remain available.
+All ten case studies were checked when the template was updated. The later process replacement was checked for all four selections and keyboard activation. Hero layouts were checked at 320, 390, 768, 1024, and 1440 px, and the mobile modal was checked for internal overflow. Keyboard opening, Escape/Back dismissal, focus restoration, and theme changes remain available.
 
 ## Final review — November 4, 2026
 
@@ -96,3 +96,9 @@ The current visual direction is ready to keep. Further visual effects are not re
 The review found and corrected one navigation issue: smooth section links now update the URL hash. Direct section links, reload, browser Back, modal history, and mobile menu navigation were checked after the change. Eighteen public profile/project/demo destinations returned HTTP 200 during the link check; LinkedIn returned its automated-access blocking response and was not treated as a broken link. Static asset and metadata checks passed.
 
 Review references: [W3C accessibility quick reference](https://www.w3.org/WAI/WCAG22/quickref/) and [Google Web Vitals](https://web.dev/articles/vitals). No numeric performance score is claimed by this review.
+
+## Repetition removed
+
+The homepage project carousel duplicated Featured Projects and was replaced with the four-step process visual. It contains no project images or project case-study buttons. Featured Projects retains its three real screenshots, live links, and case studies. The full collection remains available in the optional archive. The process panel uses original inline SVG illustrations and works with keyboard or pointer input.
+
+The replacement was checked in both themes and at 320, 390, 768, 1024, and 1440 px. All four controls select exactly one illustration and update the caption and pressed state. Keyboard activation works, the panel height remains stable at 320 px, and the Featured Projects case-study interaction remains functional.
