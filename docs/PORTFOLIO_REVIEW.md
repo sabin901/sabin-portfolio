@@ -63,7 +63,7 @@ Project screenshots were captured on November 3, 2026 from the user's public web
 
 ## Validation
 
-- Static check: 122 asset/link references, 26 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
+- Static check: 105 asset/link references, 26 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
 - JavaScript syntax and CSS compilation pass. Utilities are committed as a 14 KB stylesheet.
 - Browser checks: dark/light theme switching and saved preference; 320, 390, 768, 1024, and 1440 px layouts without horizontal overflow; mobile menu state and section focus; category filters and rapid filter changes.
 - The archive starts collapsed, opens by keyboard or pointer, and closes from its footer with focus returned to the summary. All featured screenshots open their case study. The archive and its filters were checked on mobile in light mode.
@@ -72,3 +72,11 @@ Project screenshots were captured on November 3, 2026 from the user's public web
 - Reduced-motion behavior was checked in source. Full assistive-technology and cross-browser testing was not performed.
 
 The introduction was further refined with a code accent in place of the circular photo, mint headline emphasis, a soft background glow and grid, shorter copy, a direct contact action, and compact mobile spacing. Featured-card actions align at the bottom of each card.
+
+## Expertise, writing, and light-mode refinement
+
+Skills are organized into Technical, Data Analysis, and Finance & Business cards, with tools grouped by application instead of repeated logo rows. Related project case studies and writing provide a next step. Writing cards use original code-native editorial illustrations and reading times calculated from each article's content. The illustrations do not represent measured financial data.
+
+Light mode now uses neutral off-white backgrounds, solid white cards, deep teal actions, distinct blue/teal/amber category accents, and consistent theme tokens for modal and footer surfaces. Original project content and résumé PDFs remain intact.
+
+Validation for this refinement: new capability links open their project case studies; all three writing cards open by keyboard; browser Back and Escape restore focus; mobile menu and archive filters remain functional. Layouts were checked at 320, 390, 768, 1024, and 1440 px. Light-mode primary, secondary, muted, and category text on white cards has calculated contrast ratios of 5.17:1 or higher. Theme persistence, contact/footer surfaces, modal readability, and image loading were checked in the browser.

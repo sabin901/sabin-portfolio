@@ -54,11 +54,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Precompiled utilities preserve the existing Tailwind layout. -->
-    <link rel="stylesheet" href="utilities.css">
+    <link rel="stylesheet" href="utilities.css?v=20261103-expertise">
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="enhancements.css?v=20261103-hero">
+    <link rel="stylesheet" href="enhancements.css?v=20261103-expertise">
     <noscript><style>#loading-screen {display:none!important}</style></noscript>
 </head>
 <body class="text-black font-sans antialiased">
@@ -480,245 +480,83 @@
         </div>
     </section>
 
-    <!-- Skills Section -->
+    <!-- Skills and Expertise -->
     <section id="skills" class="py-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Technical Skills</h2>
-                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-                    Software engineering: programming languages, data structures, OOP, REST APIs, full stack development, and data analytics.
-                </p>
+                <p class="section-eyebrow">How I work</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Skills & Expertise</h2>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">Building software, understanding data, and connecting the results to business decisions.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Technical Skills -->
-                <div class="project-card group">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
-                                </svg>
-                            </div>
-                        <h3 class="text-2xl font-bold text-white">Technical</h3>
-                        </div>
-                    <div class="space-y-4">
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/python.svg" alt="Python" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Python</span>
-                                <span class="text-xs text-gray-400">Data analysis, APIs, automation, scripting</span>
-                            </div>
-                        </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/sql.svg" alt="SQL" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">SQL</span>
-                                <span class="text-xs text-gray-400">Database design, queries, data modeling</span>
-                        </div>
-                        </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/javascript.svg" alt="JavaScript" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">JavaScript/TypeScript</span>
-                                <span class="text-xs text-gray-400">Frontend, React, REST APIs</span>
+            <div class="expertise-grid">
+                <article class="project-card capability-card tone-blue">
+                    <div class="capability-topline"><span class="capability-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-14-2 16"/></svg></span><span class="capability-index" aria-hidden="true">01</span></div>
+                    <h3>Technical</h3>
+                    <p class="capability-description">Build applications that connect interfaces, services, and data.</p>
+                    <div class="capability-groups">
+                        <div class="capability-group"><h4>Applications</h4><ul class="skill-tags"><li>JavaScript / TypeScript</li><li>React</li><li>FastAPI</li></ul></div>
+                        <div class="capability-group"><h4>Services & data</h4><ul class="skill-tags"><li>Python</li><li>SQL</li><li>REST APIs</li></ul></div>
+                        <div class="capability-group"><h4>Engineering foundations</h4><ul class="skill-tags"><li>Java</li><li>Git</li><li>OOP</li></ul></div>
                     </div>
-                </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/react.svg" alt="React" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">React</span>
-                                <span class="text-xs text-gray-400">UI components, state management</span>
-                            </div>
-                            </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/java.svg" alt="Java" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Java</span>
-                                <span class="text-xs text-gray-400">OOP, data structures, algorithms</span>
-                        </div>
-                            </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/git.png" alt="Git" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Git</span>
-                                <span class="text-xs text-gray-400">Version control, collaboration, CI/CD</span>
-                        </div>
-                        </div>
+                    <div class="capability-footer"><button type="button" class="capability-link project-modal-btn" data-project="iroutine" aria-label="Read iRoutine case study">See it in iRoutine <span aria-hidden="true">↗</span></button></div>
+                </article>
+                <article class="project-card capability-card tone-teal">
+                    <div class="capability-topline"><span class="capability-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10m8 10V4m8 16v-7M2 20h20"/><path d="m4 7 8-5 8 7"/></svg></span><span class="capability-index" aria-hidden="true">02</span></div>
+                    <h3>Data Analysis</h3>
+                    <p class="capability-description">Turn raw datasets into clear comparisons and useful visualizations.</p>
+                    <div class="capability-groups">
+                        <div class="capability-group"><h4>Explore & prepare</h4><ul class="skill-tags"><li>Pandas</li><li>NumPy</li><li>Data cleaning</li></ul></div>
+                        <div class="capability-group"><h4>Visualize & explain</h4><ul class="skill-tags"><li>Plotly</li><li>Tableau</li><li>Dashboards</li></ul></div>
+                        <div class="capability-group"><h4>Model & evaluate</h4><ul class="skill-tags"><li>ARIMA</li><li>Regression</li><li>Hypothesis testing</li></ul></div>
                     </div>
-                </div>
-
-                <!-- Data Analytics Skills -->
-                <div class="project-card group">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-                                </svg>
-                            </div>
-                        <h3 class="text-2xl font-bold text-white">Data Analytics</h3>
-                        </div>
-                    <div class="space-y-4">
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/pandas.png" alt="Pandas" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Pandas</span>
-                                <span class="text-xs text-gray-400">Data manipulation, analysis</span>
-                            </div>
-                        </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/Numpy.png" alt="NumPy" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">NumPy</span>
-                                <span class="text-xs text-gray-400">Numerical computing, arrays</span>
-                        </div>
-                        </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/tableau.png" alt="Tableau" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Tableau</span>
-                                <span class="text-xs text-gray-400">Business intelligence, dashboards</span>
+                    <div class="capability-footer"><button type="button" class="capability-link project-modal-btn" data-project="footlyzer" aria-label="Read Footlyzer analytics case study">Explore Footlyzer <span aria-hidden="true">↗</span></button></div>
+                </article>
+                <article class="project-card capability-card tone-gold">
+                    <div class="capability-topline"><span class="capability-icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V7l8-4 8 4v14M2 21h20M8 10h1m6 0h1m-8 4h1m6 0h1m-6 7v-4h4v4"/></svg></span><span class="capability-index" aria-hidden="true">03</span></div>
+                    <h3>Finance & Business</h3>
+                    <p class="capability-description">Connect technical analysis with financial and business context.</p>
+                    <div class="capability-groups">
+                        <div class="capability-group"><h4>Financial analysis</h4><ul class="skill-tags"><li>Valuation / DCF</li><li>Projections</li><li>Risk analysis</li></ul></div>
+                        <div class="capability-group"><h4>Modeling & reporting</h4><ul class="skill-tags"><li>Excel / VBA</li><li>Stress testing</li><li>GAAP</li></ul></div>
+                        <div class="capability-group"><h4>Business systems</h4><ul class="skill-tags"><li>ERP systems</li><li>SAP</li></ul></div>
                     </div>
-                </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/plotly.png" alt="Plotly" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Plotly</span>
-                                <span class="text-xs text-gray-400">Interactive visualizations</span>
-                            </div>
-                            </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/forecasting.png" alt="Forecasting" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Time-Series Forecasting</span>
-                                <span class="text-xs text-gray-400">ARIMA, regression models</span>
-                            </div>
-                            </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/regression.png" alt="Regression" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Statistical Analysis</span>
-                                <span class="text-xs text-gray-400">Hypothesis testing, modeling</span>
-                        </div>
-                    </div>
-                </div>
+                    <div class="capability-footer"><a href="#writing" class="capability-link">Read my finance notes <span aria-hidden="true">↗</span></a></div>
+                </article>
             </div>
-
-                <!-- Finance & Business Skills -->
-                <div class="project-card group">
-                    <div class="flex items-center gap-3 mb-6 pb-4 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <div class="w-12 h-12 rounded-lg flex items-center justify-center" style="background: rgba(110, 231, 183, 0.1);">
-                            <svg class="w-6 h-6" style="color: var(--accent-mint);" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white">Finance & Business</h3>
         </div>
-                    <div class="space-y-4">
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/Financial-modeling.png" alt="Financial Modeling" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Financial Modeling</span>
-                                <span class="text-xs text-gray-400">Valuation, DCF, projections</span>
-                    </div>
-                        </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/forecasting.png" alt="Risk Analysis" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Risk Analysis</span>
-                                <span class="text-xs text-gray-400">Risk metrics, stress testing</span>
-                        </div>
-                    </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/excel.png" alt="Excel" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">Excel/VBA</span>
-                                <span class="text-xs text-gray-400">Spreadsheet automation</span>
-                        </div>
-                </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/gaap.png" alt="GAAP" class="w-10 h-10">
-                            <div>
-                                <span class="font-bold text-white text-base block">GAAP</span>
-                                <span class="text-xs text-gray-400">Accounting principles</span>
-                    </div>
-                </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/erp.png" alt="ERP" class="w-10 h-10">
-                        <div>
-                                <span class="font-bold text-white text-base block">ERP Systems</span>
-                                <span class="text-xs text-gray-400">Enterprise resource planning</span>
-                    </div>
-                </div>
-                        <div class="skill-item flex items-center gap-4 p-3 rounded-lg hover:bg-gray-800/50 transition-all">
-                            <img src="images/skills/sap.png" alt="SAP" class="w-10 h-10">
-                        <div>
-                                <span class="font-bold text-white text-base block">SAP</span>
-                                <span class="text-xs text-gray-400">Business software suite</span>
-                                </div>
-                                </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
     </section>
 
-    <!-- Writing Section - Clean -->
+    <!-- Writing -->
     <section id="writing" class="py-20">
         <div class="max-w-6xl mx-auto px-6">
             <div class="text-center mb-12">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">
-                    Writing
-                </h2>
-                <p class="text-lg text-gray-400 max-w-2xl mx-auto">
-                    Technical articles on building fintech analytics, risk models, and business intelligence systems.
-                </p>
-                </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <article class="project-card article-card cursor-pointer group" data-article="risk-dashboard" role="button" tabindex="0" aria-haspopup="dialog">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 mb-2 block">Technical Guide</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">How to Build a Financial Risk Dashboard</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">Step-by-step guide to building a comprehensive risk dashboard using Python, SQL, and Tableau. Learn how to connect data sources, calculate risk metrics, and create interactive visualizations.</p>
-                </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
-                        <span>Read Article</span>
-                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
+                <p class="section-eyebrow">Notes from the work</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-white">Writing</h2>
+                <p class="text-lg text-gray-400 max-w-2xl mx-auto">Practical notes on the tools, tradeoffs, and ideas behind financial and data systems.</p>
             </div>
+            <div class="writing-grid">
+                <article class="project-card article-card writing-card tone-blue" data-article="risk-dashboard" role="button" tabindex="0" aria-haspopup="dialog">
+                    <div class="writing-cover" aria-hidden="true"><svg viewBox="0 0 320 156" fill="none"><rect x="36" y="24" width="248" height="112" rx="8" class="art-panel"/><path d="M36 46h248" class="art-rule"/><circle cx="48" cy="35" r="2" fill="currentColor"/><circle cx="56" cy="35" r="2" fill="currentColor" opacity=".4"/><text x="69" y="38">RISK OVERVIEW</text><rect x="49" y="59" width="62" height="21" rx="4" class="art-tile"/><rect x="119" y="59" width="62" height="21" rx="4" class="art-tile"/><rect x="189" y="59" width="81" height="21" rx="4" class="art-tile"/><path d="M52 119h216M52 101h216" class="art-rule"/><path d="m52 116 29-8 24 3 30-15 29 7 26-18 29 8 23-5 26-15" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="268" cy="73" r="4" fill="currentColor"/></svg></div>
+                    <div class="writing-meta"><span>Technical Guide</span><span class="reading-time">Article</span></div>
+                    <h3>How to Build a Financial Risk Dashboard</h3>
+                    <p class="writing-description">From raw data to a useful view of risk. A practical walkthrough of the Python, SQL, and Tableau workflow.</p>
+                    <div class="writing-footer"><span>Read article</span><span class="writing-arrow" aria-hidden="true">↗</span></div>
                 </article>
-
-                <article class="project-card article-card cursor-pointer group" data-article="arima-regression" role="button" tabindex="0" aria-haspopup="dialog">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 mb-2 block">Data Science</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">ARIMA vs Regression for Forecasting</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">Comparing time-series forecasting methods for financial data with practical examples. When to use ARIMA, when regression works better, and how to choose the right approach.</p>
-                    </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
-                        <span>Read Article</span>
-                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                </div>
+                <article class="project-card article-card writing-card tone-teal" data-article="arima-regression" role="button" tabindex="0" aria-haspopup="dialog">
+                    <div class="writing-cover" aria-hidden="true"><svg viewBox="0 0 320 156" fill="none"><path d="M40 25v110h245M40 52h245M40 80h245M40 108h245M88 25v110m48-110v110m48-110v110m48-110v110" class="art-rule"/><path d="M42 113c22-4 21-44 44-40s20 32 45 21 21-43 47-40 26 13 43 3 27-27 59-26" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="m42 119 238-91" fill="none" stroke="currentColor" opacity=".45" stroke-width="2" stroke-dasharray="5 6"/><circle cx="178" cy="54" r="5" class="art-point"/><text x="197" y="115">COMPARE / FORECAST</text></svg></div>
+                    <div class="writing-meta"><span>Data Science</span><span class="reading-time">Article</span></div>
+                    <h3>ARIMA vs Regression for Forecasting</h3>
+                    <p class="writing-description">How to choose a forecasting approach based on your data, assumptions, and the question you need to answer.</p>
+                    <div class="writing-footer"><span>Read article</span><span class="writing-arrow" aria-hidden="true">↗</span></div>
                 </article>
-
-                <article class="project-card article-card cursor-pointer group" data-article="sec-10k" role="button" tabindex="0" aria-haspopup="dialog">
-                    <div class="mb-4">
-                        <span class="text-xs font-semibold text-gray-400 mb-2 block">Financial Analysis</span>
-                        <h3 class="text-xl font-bold mb-3 text-white group-hover:text-mint transition-colors" style="--hover-color: var(--accent-mint);">Analyzing SEC 10-K Filings with Python</h3>
-                        <p class="text-gray-400 text-sm mb-4 leading-relaxed">Automated extraction and analysis of SEC filings using Python and financial statement analysis. Extract key metrics, calculate ratios, and identify trends programmatically.</p>
-                    </div>
-                    <div class="flex items-center gap-2 text-sm font-medium" style="color: var(--accent-mint);">
-                        <span>Read Article</span>
-                        <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                </div>
+                <article class="project-card article-card writing-card tone-gold" data-article="sec-10k" role="button" tabindex="0" aria-haspopup="dialog">
+                    <div class="writing-cover" aria-hidden="true"><svg viewBox="0 0 320 156" fill="none"><path d="M61 22h91l23 23v92H61z" class="art-panel"/><path d="M152 22v23h23M78 72h78M78 85h63M78 98h78M78 111h48" class="art-rule"/><text x="78" y="56">SEC / 10-K</text><path d="M167 81h39m-7-7 7 7-7 7" stroke="currentColor" stroke-width="2" fill="none"/><rect x="215" y="47" width="62" height="76" rx="6" class="art-panel"/><path d="M215 68h62m-62 18h62m-62 18h62m-40-57v76" class="art-rule"/><path d="M244 77h22m-22 18h16m-16 18h22" stroke="currentColor" stroke-width="2"/></svg></div>
+                    <div class="writing-meta"><span>Financial Analysis</span><span class="reading-time">Article</span></div>
+                    <h3>Analyzing SEC 10-K Filings with Python</h3>
+                    <p class="writing-description">Turn long company filings into structured financial data with Python, then validate the numbers against the source.</p>
+                    <div class="writing-footer"><span>Read article</span><span class="writing-arrow" aria-hidden="true">↗</span></div>
                 </article>
-                </div>
-
-
+            </div>
         </div>
     </section>
 
@@ -818,20 +656,20 @@
 
     <!-- Footer - Enhanced -->
     </main>
-    <footer class="bg-charcoal text-gray-400 py-16 border-t-2" style="border-color: rgba(110, 231, 183, 0.2);">
+    <footer class="bg-charcoal text-gray-400 py-16 border-t-2" style="border-color: var(--accent-border);">
         <div class="max-w-6xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
                 <div class="md:col-span-2">
                     <h3 class="text-2xl font-bold text-white mb-4" style="color: var(--accent-mint);">Sabin Raut</h3>
                     <p class="text-sm text-gray-400 mb-4 leading-relaxed">Information Systems & Finance student building fintech, data analytics, and business intelligence systems. Passionate about data science and turning complex data into actionable insights.</p>
                     <div class="flex gap-4">
-                        <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
+                        <a href="https://www.linkedin.com/in/sabin-raut-" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: var(--accent-soft); border: 2px solid var(--accent-border-strong);" rel="noopener noreferrer">
                             <img src="images/linkedin-contact.png" alt="LinkedIn" class="w-5 h-5 filter brightness-0 invert">
                         </a>
-                        <a href="https://github.com/sabin901" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
+                        <a href="https://github.com/sabin901" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: var(--accent-soft); border: 2px solid var(--accent-border-strong);" rel="noopener noreferrer">
                             <img src="images/github-contact.png" alt="GitHub" class="w-5 h-5 filter brightness-0 invert">
                         </a>
-                        <a href="mailto:sabinraut343@gmail.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: rgba(110, 231, 183, 0.1); border: 2px solid rgba(110, 231, 183, 0.3);" rel="noopener noreferrer">
+                        <a href="mailto:sabinraut343@gmail.com" target="_blank" class="w-10 h-10 rounded-full flex items-center justify-center transition-all hover:scale-110" style="background: var(--accent-soft); border: 2px solid var(--accent-border-strong);" rel="noopener noreferrer">
                             <img src="images/email-contact.png" alt="Email" class="w-5 h-5 filter brightness-0 invert">
                         </a>
                     </div>
@@ -859,7 +697,7 @@
                     </ul>
                 </div>
             </div>
-            <div class="text-center pt-8 border-t-2" style="border-color: rgba(110, 231, 183, 0.2);">
+            <div class="text-center pt-8 border-t-2" style="border-color: var(--accent-border);">
                 <p class="text-sm text-gray-500">&copy; <span id="copyright-year">2026</span> Sabin Raut. All rights reserved.</p>
             </div>
         </div>
@@ -919,6 +757,6 @@
     </script>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="script.js?v=20261103-expertise"></script>
 </body>
 </html>

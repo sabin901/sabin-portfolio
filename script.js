@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const light = document.documentElement.dataset.theme === 'light';
         themeToggle.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} mode`);
         themeToggle.setAttribute('aria-pressed', String(light));
-        document.querySelector('meta[name="theme-color"]').content = light ? '#f5f8fc' : '#0A1A2F';
+        document.querySelector('meta[name="theme-color"]').content = light ? '#f7f8f5' : '#0A1A2F';
     }
     themeToggle.hidden = false;
     updateThemeButton();
@@ -438,14 +438,14 @@ document.addEventListener("DOMContentLoaded", () => {
             if (project && modalBody && modalOverlay) {
                 modalBody.innerHTML = `
                     ${project.image ? `<img src="${project.image}" alt="${project.title} preview" class="modal-preview">` : ''}
-                    <div class="mb-8 pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.3);">
+                    <div class="mb-8 pb-6 border-b-2" style="border-color: var(--accent-border-strong);">
                     <div class="mb-6">
-                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">${project.category}</span>
+                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: var(--accent-soft); color: var(--accent-mint);">${project.category}</span>
                             <h2 id="project-modal-title" class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: var(--text-primary);">${project.title}</h2>
                         </div>
                         
                         <div class="space-y-6">
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
                                     <span style="color: var(--accent-mint);">●</span>
                                     Problem
@@ -453,7 +453,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.problem}</p>
                             </div>
                             
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
                                     <span style="color: var(--accent-mint);">●</span>
                                     Context
@@ -461,7 +461,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.context}</p>
                         </div>
                         
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: rgba(110, 231, 183, 0.05);">
+                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
                                     <span style="color: var(--accent-mint);">●</span>
                                     Approach
@@ -473,7 +473,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Technologies</h3>
                         <div class="flex flex-wrap gap-2">
                             ${project.technologies.map(tech => 
-                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: rgba(110, 231, 183, 0.1); border-color: rgba(110, 231, 183, 0.3); color: var(--accent-mint);">${tech}</span>`
+                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: var(--accent-soft); border-color: var(--accent-border-strong); color: var(--accent-mint);">${tech}</span>`
                             ).join('')}
                         </div>
                     </div>
@@ -482,7 +482,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Features & Current Scope</h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 ${Object.entries(project.results).map(([key, value]) => `
-                                        <div class="p-4 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                                        <div class="p-4 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
                                             <div class="text-xs font-medium mb-1" style="color: var(--text-secondary);">${key}</div>
                                             <div class="text-lg font-bold" style="color: var(--accent-mint);">${value}</div>
                                     </div>
@@ -490,7 +490,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             </div>
                     </div>
                     
-                            <div class="p-4 rounded-lg border" style="border-color: rgba(110, 231, 183, 0.2); background: rgba(110, 231, 183, 0.05);">
+                            <div class="p-4 rounded-lg border" style="border-color: var(--accent-border); background: var(--accent-wash);">
                                 <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
                                     <span style="color: var(--accent-mint);">●</span>
                                     Engineering Notes
@@ -498,7 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.lessons}</p>
                                 </div>
                         
-                            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: rgba(110, 231, 183, 0.2);">
+                            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: var(--accent-border);">
                             ${project.links.github ? `
                                     <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary inline-flex items-center justify-center gap-2">
                                     <img src="images/github.png" alt="GitHub" class="w-5 h-5">
@@ -618,8 +618,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'January 2025',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Technical Guide</span>
+                    <div class="pb-6 border-b-2" style="border-color: var(--accent-border);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: var(--accent-soft); color: var(--accent-mint);">Technical Guide</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published January 2025</p>
                     </div>
                     
@@ -657,7 +657,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             If I were rebuilding this today, I'd add more granular filtering options, implement caching for frequently accessed queries, and add export functionality for deeper analysis in Excel or Python.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: var(--accent-wash); border-color: var(--accent-border);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This is based on my experience building risk dashboards for financial analysis projects. If you're working on something similar, feel free to reach out—I'm always happy to discuss approaches and trade-offs.
                             </p>
@@ -672,8 +672,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'December 2024',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Data Science</span>
+                    <div class="pb-6 border-b-2" style="border-color: var(--accent-border);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: var(--accent-soft); color: var(--accent-mint);">Data Science</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published December 2024</p>
                     </div>
                     
@@ -712,7 +712,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             I usually start with both models and compare their performance. ARIMA often gives better short-term forecasts (1-7 days), while regression can be more accurate for longer horizons when external factors matter more. The key is testing both and understanding the business context.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: var(--accent-wash); border-color: var(--accent-border);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This comparison is based on my work with the Weather Analyzer project and financial forecasting models. The "right" choice depends on your data and use case—there's no one-size-fits-all answer.
                             </p>
@@ -727,8 +727,8 @@ document.addEventListener("DOMContentLoaded", () => {
             date: 'November 2024',
             content: `
                 <div class="space-y-6">
-                    <div class="pb-6 border-b-2" style="border-color: rgba(110, 231, 183, 0.2);">
-                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: rgba(110, 231, 183, 0.1); color: var(--accent-mint);">Financial Analysis</span>
+                    <div class="pb-6 border-b-2" style="border-color: var(--accent-border);">
+                        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background: var(--accent-soft); color: var(--accent-mint);">Financial Analysis</span>
                         <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Published November 2024</p>
                     </div>
                     
@@ -756,16 +756,16 @@ document.addEventListener("DOMContentLoaded", () => {
                         
                         <h3 class="text-2xl font-bold mb-4 text-black dark:text-white">Key Libraries</h3>
                         <div class="grid grid-cols-2 gap-3 mb-6">
-                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
                                 <strong class="text-black dark:text-white">requests</strong> - API calls to SEC EDGAR
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
                                 <strong class="text-black dark:text-white">BeautifulSoup</strong> - HTML parsing
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
                                 <strong class="text-black dark:text-white">pandas</strong> - Data manipulation
                             </div>
-                            <div class="p-3 rounded-lg border" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                            <div class="p-3 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
                                 <strong class="text-black dark:text-white">re</strong> - Pattern matching
                             </div>
                         </div>
@@ -786,7 +786,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             I'm working on adding machine learning to improve extraction accuracy, especially for companies with non-standard formatting. I'm also exploring ways to extract qualitative insights (like risk factors) using NLP.
                         </p>
                         
-                        <div class="mt-8 p-6 rounded-xl border-2" style="background: rgba(110, 231, 183, 0.05); border-color: rgba(110, 231, 183, 0.2);">
+                        <div class="mt-8 p-6 rounded-xl border-2" style="background: var(--accent-wash); border-color: var(--accent-border);">
                             <p class="text-sm text-gray-600 dark:text-gray-400 italic">
                                 This approach has been useful for my financial analysis projects. If you're working on something similar, I'd be happy to share code snippets or discuss challenges you're facing.
                             </p>
@@ -798,6 +798,13 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     articleCards.forEach(card => {
+        const article = articlesData[card.dataset.article];
+        const readingTime = card.querySelector('.reading-time');
+        if (article && readingTime) {
+            const text = new DOMParser().parseFromString(article.content, 'text/html').body.textContent;
+            const minutes = Math.max(1, Math.ceil(text.trim().split(/\s+/).length / 200));
+            readingTime.textContent = `${minutes} min read`;
+        }
         card.setAttribute('aria-label', `Read ${card.querySelector('h3').textContent}`);
         card.addEventListener('keydown', event => {
             if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); card.click(); }

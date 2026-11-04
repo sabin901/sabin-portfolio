@@ -15,7 +15,7 @@ Open http://127.0.0.1:8917. Use another port if it is occupied. The committed st
 ## Update content
 
 - `index.html`: introduction, project cards, skills, experience, biography, and contact links.
-- `script.js`: case studies, writing content, filters, navigation, modal behavior, and theme controls.
+- `script.js`: case studies, writing content, filters, navigation, modal behavior, theme controls, and article reading-time estimates. Bump its `?v=` value in `index.html` when changing it.
 - `styles.css`: preserved original styling.
 - `enhancements.css`: light mode, accessibility, and responsive refinements. Bump its `?v=` value in `index.html` when changing it so browsers load the new styles.
 - `theme.js`: applies the saved theme before the first paint.
@@ -26,7 +26,7 @@ Project copy reflects documented functionality. Footlyzer forecasts are experime
 
 ## Styles and checks
 
-The existing Tailwind utility classes are compiled into `utilities.css`, avoiding a runtime CDN compiler. If you add utility classes to the HTML or JavaScript, rebuild with Node.js/npm:
+The existing Tailwind utility classes are compiled into `utilities.css`, avoiding a runtime CDN compiler. Update its `?v=` value in `index.html` after rebuilding. Skill groups and original editorial cover illustrations live in the HTML; their theme styles live in `enhancements.css`. If you add utility classes to the HTML or JavaScript, rebuild with Node.js/npm:
 
 ```sh
 npx --yes tailwindcss@3.4.17 -c tailwind.config.cjs -i scripts/tailwind.css -o utilities.css --minify
