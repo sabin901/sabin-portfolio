@@ -428,6 +428,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 };
 
+    // Visitors can explore three real project previews without leaving the hero.
+    const heroPreview = document.getElementById('hero-project-preview');
+    const heroChoices = [...document.querySelectorAll('[data-hero-project]')];
+    const heroLabels = {
+        pawi: ['Pawi', 'A virtual companion for your desktop'],
+        footlyzer: ['Footlyzer', 'Football analytics, with context'],
+        iroutine: ['iRoutine', 'A workspace for personal analytics']
+    };
+    heroChoices.forEach((choice, index) => choice.addEventListener('click', () => {
+        const id = choice.dataset.heroProject;
+        const project = projectData[id];
+        const [name, description] = heroLabels[id];
+        heroChoices.forEach(button => button.setAttribute('aria-pressed', String(button === choice)));
+        heroPreview.dataset.project = id;
+        heroPreview.setAttribute('aria-label', `Explore ${name} case study`);
+        const previewImage = document.getElementById('hero-project-image');
+        previewImage.src = project.image;
+        previewImage.alt = `${name} public website preview`;
+        document.getElementById('hero-project-name').textContent = name;
+        document.getElementById('hero-project-description').textContent = description;
+        document.getElementById('hero-project-count').textContent = `0${index + 1} / 03`;
+    }));
+
     projectModalBtns.forEach(btn => {
         btn.setAttribute('aria-haspopup', 'dialog');
         if (!btn.hasAttribute('aria-label')) btn.setAttribute('aria-label', `Read ${btn.closest('.project-card').querySelector('h3').textContent.trim()} case study`);
@@ -437,84 +460,29 @@ document.addEventListener("DOMContentLoaded", () => {
             
             if (project && modalBody && modalOverlay) {
                 modalBody.innerHTML = `
-                    ${project.image ? `<img src="${project.image}" alt="${project.title} preview" class="modal-preview">` : ''}
-                    <div class="mb-8 pb-6 border-b-2" style="border-color: var(--accent-border-strong);">
-                    <div class="mb-6">
-                            <span class="inline-block px-3 py-1 rounded text-xs font-semibold mb-3" style="background: var(--accent-soft); color: var(--accent-mint);">${project.category}</span>
-                            <h2 id="project-modal-title" class="text-2xl md:text-3xl font-bold mt-2 mb-4" style="color: var(--text-primary);">${project.title}</h2>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
-                                    <span style="color: var(--accent-mint);">●</span>
-                                    Problem
-                                </h3>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.problem}</p>
+                    <article class="case-study">
+                        <div class="case-intro ${project.image ? 'has-preview' : ''}">
+                        <header class="case-heading">
+                            <p class="case-category">${project.category}</p>
+                            <h2 id="project-modal-title">${project.title}</h2>
+                            <p class="case-lede">${project.context}</p>
+                            <div class="case-actions">
+                                ${project.links.demo && project.links.demo !== '#' ? `<a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="case-action case-action-primary">Open live project <span aria-hidden="true">↗</span></a>` : ''}
+                                ${project.links.github ? `<a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="case-action">View source <span aria-hidden="true">↗</span></a>` : ''}
                             </div>
-                            
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
-                                    <span style="color: var(--accent-mint);">●</span>
-                                    Context
-                                </h3>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.context}</p>
+                        </header>
+                        ${project.image ? `<figure class="case-preview"><img src="${project.image}" alt="${project.title} public project preview"><figcaption>Public project preview</figcaption></figure>` : ''}
                         </div>
-                        
-                            <div class="p-4 rounded-lg border-l-4" style="border-color: var(--accent-mint); background: var(--accent-wash);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
-                                    <span style="color: var(--accent-mint);">●</span>
-                                    Approach
-                                </h3>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.approach}</p>
+                        <div class="case-overview-grid">
+                            <section class="case-section"><p class="case-section-number" aria-hidden="true">01 / PURPOSE</p><h3>Why it exists</h3><p>${project.problem}</p></section>
+                            <section class="case-section"><p class="case-section-number" aria-hidden="true">02 / APPROACH</p><h3>How it works</h3><p>${project.approach}</p></section>
                         </div>
-                        
-                        <div>
-                                <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Technologies</h3>
-                        <div class="flex flex-wrap gap-2">
-                            ${project.technologies.map(tech => 
-                                        `<span class="px-3 py-1.5 rounded text-xs font-medium border" style="background: var(--accent-soft); border-color: var(--accent-border-strong); color: var(--accent-mint);">${tech}</span>`
-                            ).join('')}
-                        </div>
-                    </div>
-                    
-                        <div>
-                                <h3 class="text-lg font-bold mb-3" style="color: var(--text-primary);">Features & Current Scope</h3>
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                ${Object.entries(project.results).map(([key, value]) => `
-                                        <div class="p-4 rounded-lg border" style="background: var(--accent-wash); border-color: var(--accent-border);">
-                                            <div class="text-xs font-medium mb-1" style="color: var(--text-secondary);">${key}</div>
-                                            <div class="text-lg font-bold" style="color: var(--accent-mint);">${value}</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                    </div>
-                    
-                            <div class="p-4 rounded-lg border" style="border-color: var(--accent-border); background: var(--accent-wash);">
-                                <h3 class="text-lg font-bold mb-2 flex items-center gap-2" style="color: var(--text-primary);">
-                                    <span style="color: var(--accent-mint);">●</span>
-                                    Engineering Notes
-                                </h3>
-                                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">${project.lessons}</p>
-                                </div>
-                        
-                            <div class="flex flex-col sm:flex-row gap-3 pt-6 border-t" style="border-color: var(--accent-border);">
-                            ${project.links.github ? `
-                                    <a href="${project.links.github}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-primary inline-flex items-center justify-center gap-2">
-                                    <img src="images/github.png" alt="GitHub" class="w-5 h-5">
-                                    View on GitHub
-                                </a>
-                            ` : ''}
-                            ${project.links.demo && project.links.demo !== '#' ? `
-                                    <a href="${project.links.demo}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-secondary inline-flex items-center justify-center gap-2">
-                                    Live Demo
-                                </a>
-                            ` : ''}
-                            </div>
-                        </div>
-                    </div>
+                        <section class="case-section case-stack"><h3>Built with</h3><ul class="case-technologies">${project.technologies.map(tech => `<li>${tech}</li>`).join('')}</ul></section>
+                        <section class="case-section case-scope"><p class="case-section-number" aria-hidden="true">03 / CURRENT SCOPE</p><h3>What’s inside</h3><dl class="case-features">${Object.entries(project.results).map(([label, detail]) => `<div><dt>${label}</dt><dd>${detail}</dd></div>`).join('')}</dl></section>
+                        <section class="case-section case-notes"><span class="case-notes-icon" aria-hidden="true">&lt;/&gt;</span><div><h3>Engineering notes</h3><p>${project.lessons}</p></div></section>
+                    </article>
                 `;
-                
+
                 openDialog(modalOverlay, btn);
             }
         });
@@ -597,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Observe animated elements
     document.querySelectorAll('.project-card, section > div > div').forEach((el, index) => {
-        if (observer && !reducedMotion.matches && !el.classList.contains('text-center') && !el.classList.contains('article-card') && !el.querySelector('.project-card, [role="dialog"]')) {
+        if (observer && !reducedMotion.matches && !el.classList.contains('text-center') && !el.classList.contains('article-card') && !el.classList.contains('hero-showcase') && !el.querySelector('.project-card, [role="dialog"]')) {
         el.style.opacity = '0';
             el.style.transform = 'translateY(30px) scale(0.95)';
             el.style.transition = `opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)`;

@@ -54,11 +54,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Precompiled utilities preserve the existing Tailwind layout. -->
-    <link rel="stylesheet" href="utilities.css?v=20261103-expertise">
+    <link rel="stylesheet" href="utilities.css?v=20261104-visual">
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="enhancements.css?v=20261103-expertise">
+    <link rel="stylesheet" href="enhancements.css?v=20261104-visual">
     <noscript><style>#loading-screen {display:none!important}</style></noscript>
 </head>
 <body class="text-black font-sans antialiased">
@@ -130,7 +130,7 @@
     <main id="main-content" tabindex="-1">
     <!-- Hero Section -->
     <section id="home" class="relative flex items-center min-h-screen pt-20 home-background">
-        <div class="max-w-4xl mx-auto px-6 py-20 w-full">
+        <div class="hero-layout max-w-6xl mx-auto px-6 py-20 w-full">
             <div class="text-left relative z-10">
                 <div class="hero-intro animate-fade-in" style="animation-delay: 0.1s;">
                     <span class="hero-code-mark" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-14-2 16"/></svg></span>
@@ -155,6 +155,22 @@
                         <a href="mailto:sabinraut343@gmail.com" class="w-10 h-10 rounded-full flex items-center justify-center border border-accent/50 text-accent hover:bg-accent/10 transition-all" aria-label="Email Sabin"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></a>
                     </div>
                 </div>
+            </div>
+            <div class="hero-showcase">
+                <div class="hero-showcase-heading"><span>A few things I’ve built</span><span id="hero-project-count" aria-hidden="true">01 / 03</span></div>
+                <div class="hero-project-frame">
+                    <div class="hero-window-bar" aria-hidden="true"><span class="hero-window-dots"><i></i><i></i><i></i></span><span>Selected work</span><span>↗</span></div>
+                    <button type="button" id="hero-project-preview" class="hero-project-open project-modal-btn" data-project="pawi" aria-label="Explore Pawi case study">
+                        <img id="hero-project-image" src="images/projects/pawi.webp" alt="Pawi public website preview" width="1280" height="720" fetchpriority="high">
+                        <span class="hero-project-caption"><span><strong id="hero-project-name" aria-live="polite">Pawi</strong><span id="hero-project-description">A virtual companion for your desktop</span></span><span class="hero-project-arrow" aria-hidden="true">↗</span></span>
+                    </button>
+                </div>
+                <div class="hero-project-picker" role="group" aria-label="Choose a project preview">
+                    <button type="button" data-hero-project="pawi" aria-pressed="true" aria-controls="hero-project-preview">Pawi</button>
+                    <button type="button" data-hero-project="footlyzer" aria-pressed="false" aria-controls="hero-project-preview">Footlyzer</button>
+                    <button type="button" data-hero-project="iroutine" aria-pressed="false" aria-controls="hero-project-preview">iRoutine</button>
+                </div>
+                <p class="hero-showcase-note">Real projects. Open a preview to explore the build.</p>
             </div>
         </div>
     </section>
@@ -568,7 +584,7 @@
                             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                 <div class="flex justify-center">
-                    <img src="images/profile-pic.png?v=2" alt="Sabin Raut" class="w-72 h-72 rounded-full object-cover border-4 shadow-2xl transition-all duration-300 hover:scale-105 profile-img-border">
+                    <img src="images/profile-pic.png?v=2" alt="Sabin Raut" loading="lazy" decoding="async" width="288" height="288" class="w-72 h-72 rounded-full object-cover border-4 shadow-2xl transition-all duration-300 hover:scale-105 profile-img-border">
                             </div>
                 <div>
                     <p class="text-lg text-gray-300 mb-6 leading-relaxed">
@@ -707,6 +723,7 @@
     <div id="modal-overlay" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="project-modal-title" tabindex="-1">
         <div class="modal-content">
             <div class="modal-header">
+                <span class="case-window-label">Project case study</span>
                 <button class="modal-close" type="button" aria-label="Close">&times;</button>
             </div>
             <div id="modal-body" class="modal-body"></div>
@@ -757,6 +774,6 @@
     </script>
 
     <!-- Scripts -->
-    <script src="script.js?v=20261103-expertise"></script>
+    <script src="script.js?v=20261104-visual"></script>
 </body>
 </html>

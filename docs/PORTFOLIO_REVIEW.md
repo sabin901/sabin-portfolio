@@ -63,7 +63,7 @@ Project screenshots were captured on November 3, 2026 from the user's public web
 
 ## Validation
 
-- Static check: 105 asset/link references, 26 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
+- Static check: 106 asset/link references, 31 unique IDs, structured data, sitemap, image alt attributes, and résumé PDF pass.
 - JavaScript syntax and CSS compilation pass. Utilities are committed as a 14 KB stylesheet.
 - Browser checks: dark/light theme switching and saved preference; 320, 390, 768, 1024, and 1440 px layouts without horizontal overflow; mobile menu state and section focus; category filters and rapid filter changes.
 - The archive starts collapsed, opens by keyboard or pointer, and closes from its footer with focus returned to the summary. All featured screenshots open their case study. The archive and its filters were checked on mobile in light mode.
@@ -80,3 +80,11 @@ Skills are organized into Technical, Data Analysis, and Finance & Business cards
 Light mode now uses neutral off-white backgrounds, solid white cards, deep teal actions, distinct blue/teal/amber category accents, and consistent theme tokens for modal and footer surfaces. Original project content and résumé PDFs remain intact.
 
 Validation for this refinement: new capability links open their project case studies; all three writing cards open by keyboard; browser Back and Escape restore focus; mobile menu and archive filters remain functional. Layouts were checked at 320, 390, 768, 1024, and 1440 px. Light-mode primary, secondary, muted, and category text on white cards has calculated contrast ratios of 5.17:1 or higher. Theme persistence, contact/footer surfaces, modal readability, and image loading were checked in the browser.
+
+## Visual homepage and case-study refinement — November 4, 2026
+
+The introduction now combines the existing biography with an interactive preview of Pawi, Footlyzer, and iRoutine. Preview selectors update the image, caption, accessible state, and case-study action. All images are the existing captures of the real public projects. Warm sage/cream layers distinguish light mode; dark mode retains the navy/mint identity with a richer layered background.
+
+Project modals now share the homepage's panel surfaces and accents. The introduction and preview sit side by side on larger screens, followed by purpose and approach, separate technology chips, a feature grid, and engineering notes. Live/source links are near the top. Project claims and current-scope qualifications are preserved.
+
+All ten case studies and all three preview selections were checked in the browser. Hero layouts were checked at 320, 390, 768, 1024, and 1440 px, and the mobile modal was checked for internal overflow. Keyboard opening, Escape/Back dismissal, focus restoration, and theme changes remain available.
